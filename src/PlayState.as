@@ -17,8 +17,9 @@ package
     public static const WALL_WIDTH:Number = 32;
 
     override public function create():void {
-      _scoreText = new FlxText(0,186,256, GameTracker.score + "m");
+      _scoreText = new FlxText(0,16,FlxG.width, GameTracker.score + "m");
       _scoreText.alignment = "center";
+      _scoreText.scrollFactor.x = _scoreText.scrollFactor.y = 0;
       add(_scoreText);
 
       _highScoreText = new FlxText(0,200,280, "High Score: 0");
@@ -38,7 +39,7 @@ package
       add(_player);
 
       FlxG.camera.follow(_player);
-      FlxG.camera.deadzone = new FlxRect(0,64,240,Number.MAX_VALUE);
+      FlxG.camera.deadzone = new FlxRect(0,FlxG.height*(2/5),240,Number.MAX_VALUE);
     }
 
     override public function update():void {
