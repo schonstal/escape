@@ -9,6 +9,7 @@ package
 
     private var _scoreText:FlxText;
     private var _highScoreText:FlxText;
+    private var _walls:Walls;
 
     private var _playerOffset:Number = 284;
 
@@ -26,11 +27,14 @@ package
       _floor = new FloorSprite(0, _playerOffset + 20);
       add(_floor);
 
+      _walls = new Walls();
+      add(_walls);
+
       _player = new Player(WALL_WIDTH,_playerOffset);
       add(_player);
 
       FlxG.camera.follow(_player);
-      FlxG.camera.deadzone = new FlxRect(0,64,240,256);
+      FlxG.camera.deadzone = new FlxRect(0,64,240,Number.MAX_VALUE);
     }
 
     override public function update():void {

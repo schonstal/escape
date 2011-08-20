@@ -15,6 +15,8 @@ package
     private var _rightWallRange:Number;
     private var _escapePressed:Boolean = false;
 
+    private var _maxCameraY:Number = 0;
+
     public function Player(X:Number,Y:Number):void {
       super(X,Y);
       loadGraphic(ImgPlayer, true, true, 16, 20); 
@@ -39,7 +41,7 @@ package
 
     override public function update():void {           
       _leftWallRange = PlayState.WALL_WIDTH;
-      _rightWallRange = (FlxG.camera.width - PlayState.WALL_WIDTH) - width; 
+      _rightWallRange = (FlxG.camera.width - PlayState.WALL_WIDTH) - width;
 
       if(FlxG.keys.justPressed("ESCAPE") && (x <= _leftWallRange + WALL_LEEWAY || x >= _rightWallRange - WALL_LEEWAY)) {
         _escapePressed = true;
