@@ -12,6 +12,10 @@ package
     private var _leftWalls:Walls;
     private var _rightWalls:Walls;
 
+    private var _sawCreated:Boolean = false;
+    private var _saw:Saw;
+    private var _sawY:Number = -100;
+
     private var _playerOffset:Number = 284;
 
     public static const WALL_WIDTH:Number = 32;
@@ -46,6 +50,12 @@ package
       FlxG.collide(_player,_floor);
 
       //FlxG.camera.setBounds(0,-1000000000,0,-1000000000 + (_player.y - 320)) 
+
+      if(!_sawCreated && FlxG.camera.scroll.y < _sawY) {
+        _saw = new Saw(0, FlxG.height);
+        add(_saw);
+        _sawCreated = true;
+      }
 
       if(_player.y - _playerOffset < -GameTracker.score) {
         GameTracker.score = -(_player.y - _playerOffset);
