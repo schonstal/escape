@@ -9,7 +9,8 @@ package
 
     private var _scoreText:FlxText;
     private var _highScoreText:FlxText;
-    private var _walls:Walls;
+    private var _leftWalls:Walls;
+    private var _rightWalls:Walls;
 
     private var _playerOffset:Number = 284;
 
@@ -27,8 +28,11 @@ package
       _floor = new FloorSprite(0, _playerOffset + 20);
       add(_floor);
 
-      _walls = new Walls();
-      add(_walls);
+      _leftWalls = new Walls(FlxObject.LEFT);
+      add(_leftWalls);
+
+      _rightWalls = new Walls(FlxObject.RIGHT);
+      add(_rightWalls);
 
       _player = new Player(WALL_WIDTH,_playerOffset);
       add(_player);
@@ -48,7 +52,7 @@ package
       if(_player.y - _playerOffset < -GameTracker.score) {
         GameTracker.score = -(_player.y - _playerOffset);
         _scoreText.text = Math.floor(GameTracker.score/20) + "m";
-        _highScoreText.text = "High Score: " + GameTracker.highScore + "m";
+        _highScoreText.text = ""+FlxG.camera.y//"High Score: " + GameTracker.highScore + "m";
       }
 
       super.update();
