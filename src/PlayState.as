@@ -7,17 +7,24 @@ package
     private var _floor:FloorSprite;
     private var _player:Player;
 
-    private var _playerOffset:Number = 304;
+    private var _scoreText:FlxText;
+    private var _highScoreText:FlxText;
+
+    private var _playerOffset:Number = 284;
 
     override public function create():void {
-      var t:FlxText = new FlxText(0,186,256, "You are playing.");
-      t.alignment = "center";
-      add(t);
+      _scoreText = new FlxText(0,186,256, GameTracker.score + "m");
+      _scoreText.alignment = "center";
+      add(_scoreText);
 
-      _floor = new FloorSprite(0, _playerOffset);
+      _highScoreText = new FlxText(0,200,280, "High Score: 0");
+      _highScoreText.alignment = "center";
+      add(_highScoreText);
+
+      _floor = new FloorSprite(0, _playerOffset + 20);
       add(_floor);
 
-      _player = new Player(0,0);
+      _player = new Player(0,_playerOffset);
       add(_player);
     }
 
@@ -27,8 +34,10 @@ package
       }
       FlxG.collide(_player,_floor);
 
-      if(_player.y < -GameTracker.score) {
+      if(_player.y - _playerOffset < -GameTracker.score) {
         GameTracker.score = -(_player.y - _playerOffset);
+        _scoreText.text = Math.floor(GameTracker.score/20) + "m";
+        _highScoreText.text = "High Score: " + GameTracker.highScore + "m";
       }
 
       super.update();
