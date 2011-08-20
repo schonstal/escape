@@ -42,9 +42,6 @@ package
     }
 
     override public function update():void {
-      if(FlxG.keys.justPressed("ESCAPE")) {
-        FlxG.flash(0xffffffff, 0.25);
-      }
       FlxG.collide(_player,_floor);
 
       //FlxG.camera.setBounds(0,-1000000000,0,-1000000000 + (_player.y - 320)) 
