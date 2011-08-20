@@ -1,0 +1,3 @@
+[submodule "flixel"]
+	path = flixel
+	url = https://github.com/AdamAtomic/flixel.git
