@@ -12,6 +12,8 @@ package
 
     private var _playerOffset:Number = 284;
 
+    public static const WALL_WIDTH:Number = 32;
+
     override public function create():void {
       _scoreText = new FlxText(0,186,256, GameTracker.score + "m");
       _scoreText.alignment = "center";
@@ -24,8 +26,11 @@ package
       _floor = new FloorSprite(0, _playerOffset + 20);
       add(_floor);
 
-      _player = new Player(0,_playerOffset);
+      _player = new Player(WALL_WIDTH,_playerOffset);
       add(_player);
+
+      FlxG.camera.follow(_player);
+      FlxG.camera.deadzone = new FlxRect(0,64,240,256);
     }
 
     override public function update():void {
@@ -33,6 +38,8 @@ package
         FlxG.flash(0xffffffff, 0.25);
       }
       FlxG.collide(_player,_floor);
+
+      //FlxG.camera.setBounds(0,-1000000000,0,-1000000000 + (_player.y - 320)) 
 
       if(_player.y - _playerOffset < -GameTracker.score) {
         GameTracker.score = -(_player.y - _playerOffset);
