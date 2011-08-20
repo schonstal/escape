@@ -5,10 +5,15 @@ package
   public class Player extends FlxSprite
   {
     public var mobile:Boolean = true;
+    public static const WALL_LEEWAY:Number = 24;
 
     [Embed(source='../data/player.png')] private var ImgPlayer:Class;
     private var _speed:FlxPoint;
     private var _gravity:Number = 600; 
+
+    private var _leftWallRange:Number;
+    private var _rightWallRange:Number;
+    private var _escapePressed:Boolean = false;
 
     public function Player(X:Number,Y:Number):void {
       super(X,Y);
@@ -33,20 +38,31 @@ package
     }
 
     override public function update():void {           
-      if(FlxG.keys.justPressed("ESCAPE")) {
+      _leftWallRange = PlayState.WALL_WIDTH;
+      _rightWallRange = (FlxG.camera.width - PlayState.WALL_WIDTH) - width; 
+
+      if(FlxG.keys.justPressed("ESCAPE") && (x <= _leftWallRange + WALL_LEEWAY || x >= _rightWallRange - WALL_LEEWAY)) {
+        _escapePressed = true;
+      }
+
+      if(_escapePressed && velocity.x == 0) {
         if(velocity.y < 0)
           velocity.y -= _speed.y;
         else
           velocity.y = -_speed.y;
         
-        velocity.x = _speed.x * (facing == RIGHT ? -1 : 1); 
+        velocity.x = _speed.x * (facing == RIGHT ? -1 : 1);
+        _escapePressed = false; 
       }
 
-      if(x <= PlayState.WALL_WIDTH && facing == RIGHT) {
+
+      if(x <= _leftWallRange && facing == RIGHT) {
         velocity.x = 0;
+        x = PlayState.WALL_WIDTH;
         facing = LEFT;
-      } else if(x >= FlxG.camera.width - PlayState.WALL_WIDTH - width && facing == LEFT) {
+      } else if(x >= _rightWallRange && facing == LEFT) {
         velocity.x = 0;
+        x = (FlxG.camera.width - PlayState.WALL_WIDTH) - width;
         facing = RIGHT;
       }
 
