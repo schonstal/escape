@@ -12,7 +12,8 @@ package
       super(X,Y);
       loadGraphic(ImgSaw, true, true, 240, 160);
       velocity.y = -10;
-      maxVelocity.y = 75;
+      acceleration.y = -PlayState.SAW_SPEED;
+      maxVelocity.y = 175;
       immovable = true;
     }
 

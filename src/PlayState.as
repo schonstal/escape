@@ -31,6 +31,14 @@ package
 
     public static const WALL_WIDTH:Number = 32;
     public static const GRAVITY:Number = 600; 
+    public static const JUMP_SPEED_X:Number = 400;
+    public static const JUMP_HEIGHT:Number = 400;
+    public static const SAW_SPEED:Number = 3.5;
+    public static const SAW_MAX:Number = 75;
+
+    public function get playerFacing():uint {
+      return _player.facing;
+    }
 
     override public function create():void {
       debugText = new FlxText(0,48,FlxG.width, "");

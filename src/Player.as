@@ -36,8 +36,8 @@ package
       offset.y = 0;
 
       _speed = new FlxPoint();
-      _speed.y = 400;
-      _speed.x = 600;
+      _speed.y = PlayState.JUMP_HEIGHT;
+      _speed.x = PlayState.JUMP_SPEED_X;
 
       acceleration.y = _gravity;
       //maxVelocity.y = _gravity * 0.75;
