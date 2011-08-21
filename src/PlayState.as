@@ -33,11 +33,6 @@ package
     public static const GRAVITY:Number = 600; 
 
     override public function create():void {
-      _scoreText = new FlxText(0,16,FlxG.width, GameTracker.score + "m");
-      _scoreText.alignment = "center";
-      _scoreText.scrollFactor.x = _scoreText.scrollFactor.y = 0;
-      add(_scoreText);
-
       debugText = new FlxText(0,48,FlxG.width, "");
       debugText.alignment = "center";
       debugText.scrollFactor.x = debugText.scrollFactor.y = 0;
@@ -46,9 +41,6 @@ package
       _pressEscapeText = new FlxText(0,FlxG.height*(4/5),FlxG.width, "PRESS ESCAPE");
       _pressEscapeText.alignment = "center";
       add(_pressEscapeText);
-
-      _floor = new FloorSprite(0, _playerOffset + 20);
-      add(_floor);
 
       _leftWalls = new Walls();
       add(_leftWalls);
@@ -62,8 +54,17 @@ package
       _rightShockers = new ShockerGroup(FlxObject.RIGHT);
       add(_rightShockers);
 
+      _floor = new FloorSprite(0, _playerOffset + 20);
+      add(_floor);
+
       _player = new Player(WALL_WIDTH,_playerOffset);
       add(_player);
+
+      _scoreText = new FlxText(0,16,FlxG.width, GameTracker.score + "m");
+      _scoreText.alignment = "center";
+      _scoreText.scrollFactor.x = _scoreText.scrollFactor.y = 0;
+      add(_scoreText);
+
 
       FlxG.camera.follow(_player);
       FlxG.camera.deadzone = new FlxRect(0,FlxG.height*(2/5),240,Number.MAX_VALUE);
