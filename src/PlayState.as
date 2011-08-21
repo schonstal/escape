@@ -123,12 +123,12 @@ package
         _superModeArray.shift();
         _superModeArray.push(GameTracker.score);
         if(Math.abs(GameTracker.score - _superModeArray[0]) > SUPER_MODE_DISTANCE) {
-          _superMode = true;
+          _player.superMode = true;
         } else {
-          _superMode = false;
+          _player.superMode = false;
         }
       }
-      if (_superMode && !_gameOver && !_player.shocked) {
+      if (_player.superMode && !_gameOver && !_player.shocked) {
         createGlow();
       }
 

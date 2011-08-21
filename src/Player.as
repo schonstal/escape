@@ -8,6 +8,9 @@ package
     public var standing:Boolean = true;
     public static const WALL_LEEWAY:Number = 24;
 
+    [Embed(source='../data/sounds.swf', symbol='jump.wav')] private var JumpSound:Class;
+    [Embed(source='../data/sounds.swf', symbol='superJump.wav')] private var SuperJumpSound:Class;
+
     [Embed(source='../data/player.png')] private var ImgPlayer:Class;
     private var _speed:FlxPoint;
     private var _gravity:Number = PlayState.GRAVITY; 
@@ -25,6 +28,7 @@ package
     public var animation:String = "";
 
     public var jumpCallback:Function = null;
+    public var superMode:Boolean = false;
 
     public function Player(X:Number,Y:Number):void {
       super(X,Y);
@@ -89,6 +93,10 @@ package
           
           velocity.x = _speed.x * (facing == LEFT ? -1 : 1);
           _escapePressed = false; 
+
+          if(superMode)
+            FlxG.play(SuperJumpSound).volume = 0.5;
+          FlxG.play(JumpSound);
 
           if(jumpCallback != null) {
             for(var i:int = 0; i < 2; i++) {
