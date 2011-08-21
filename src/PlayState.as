@@ -90,8 +90,10 @@ package
 
       if(_player.x <= WALL_WIDTH) {
         checkShocked(_leftShockers);
+        _player.x = WALL_WIDTH;
       } else if(_player.x >= FlxG.width - WALL_WIDTH - _player.width) {
         checkShocked(_rightShockers);
+        _player.x = FlxG.width - WALL_WIDTH - _player.width;
       }
 
       if(FlxG.collide(_player, _leftShockers) || FlxG.overlap(_player, _rightShockers)) {
