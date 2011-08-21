@@ -5,11 +5,12 @@ package
   public class Player extends FlxSprite
   {
     public var mobile:Boolean = true;
+    public var standing:Boolean = true;
     public static const WALL_LEEWAY:Number = 24;
 
     [Embed(source='../data/player.png')] private var ImgPlayer:Class;
     private var _speed:FlxPoint;
-    private var _gravity:Number = 600; 
+    private var _gravity:Number = PlayState.GRAVITY; 
 
     private var _leftWallRange:Number;
     private var _rightWallRange:Number;
@@ -35,6 +36,11 @@ package
 
       acceleration.y = _gravity;
       //maxVelocity.y = _gravity * 0.75;
+      addAnimation("slide", [5]);
+      addAnimation("jump", [3]);
+      addAnimation("fall", [4]);
+      addAnimation("idle", [0,2,0,2,0,2,0,2,0,2,1,2],4);
+
 
       facing = RIGHT;
     }
@@ -53,19 +59,19 @@ package
         else
           velocity.y = -_speed.y;
         
-        velocity.x = _speed.x * (facing == RIGHT ? -1 : 1);
+        velocity.x = _speed.x * (facing == LEFT ? -1 : 1);
         _escapePressed = false; 
       }
 
 
-      if(x <= _leftWallRange && facing == RIGHT) {
+      if(x <= _leftWallRange && facing == LEFT) {
         velocity.x = 0;
         x = PlayState.WALL_WIDTH;
-        facing = LEFT;
-      } else if(x >= _rightWallRange && facing == LEFT) {
+        facing = RIGHT;
+      } else if(x >= _rightWallRange && facing == RIGHT) {
         velocity.x = 0;
         x = (FlxG.camera.width - PlayState.WALL_WIDTH) - width;
-        facing = RIGHT;
+        facing = LEFT;
       }
 
       if(velocity.y > _gravity * 0.75)
@@ -75,6 +81,17 @@ package
         acceleration.y = _gravity * 3;
       else
         acceleration.y = _gravity;
+
+      if(standing) {
+        play("idle");
+      } else {
+        if(velocity.x == 0)
+          play("slide");
+        else if (velocity.y < 0)
+          play("jump");
+        else
+          play("fall");
+      }
 
       super.update();
     }
