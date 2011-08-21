@@ -13,6 +13,7 @@ package
       loadGraphic(ImgSaw, true, true, 240, 160);
       velocity.y = -10;
       maxVelocity.y = 75;
+      immovable = true;
     }
 
     override public function update():void {
