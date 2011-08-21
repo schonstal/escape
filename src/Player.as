@@ -59,7 +59,7 @@ package
       if(shocked) {
         _shockTimer += FlxG.elapsed;
         if(_shockTimer < _shockThreshold) {
-          FlxG.shake(0.001, 0.05);
+          FlxG.shake(0.005, 0.05);
           velocity.y = velocity.x = acceleration.x = acceleration.y = 0;
           play("shock");
         } else {
