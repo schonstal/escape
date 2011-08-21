@@ -10,6 +10,7 @@ package
 
     [Embed(source='../data/sounds.swf', symbol='jump.wav')] private var JumpSound:Class;
     [Embed(source='../data/sounds.swf', symbol='superJump.wav')] private var SuperJumpSound:Class;
+    [Embed(source='../data/sounds.swf', symbol='shockFall.wav')] private var ShockFallSound:Class;
 
     [Embed(source='../data/player.png')] private var ImgPlayer:Class;
     private var _speed:FlxPoint;
@@ -24,10 +25,13 @@ package
     private var _shockTimer:Number = 0;
     private var _shockThreshold:Number = 0.5;
 
+    private var _alreadyFell:Boolean = false;
+
     public var shocked:Boolean = false;
     public var animation:String = "";
 
     public var jumpCallback:Function = null;
+    public var fallCallback:Function = null;
     public var superMode:Boolean = false;
 
     public function Player(X:Number,Y:Number):void {
@@ -75,6 +79,15 @@ package
           velocity.y = velocity.x = acceleration.x = acceleration.y = 0;
           play("shock");
         } else {
+          if(!_alreadyFell) {
+            FlxG.play(ShockFallSound);
+            FlxG.shake(0.02, 0.2);
+            FlxG.flash(0xffeeeeff, 0.1);
+            if(fallCallback != null) {
+              fallCallback();
+            }
+            _alreadyFell = true;
+          }
           angularVelocity = (x < FlxG.width/2 ? 100 : -100);
           play("crisp");
           acceleration.y = _gravity;

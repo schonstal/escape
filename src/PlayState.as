@@ -4,6 +4,8 @@ package
 
   public class PlayState extends FlxState
   {
+    [Embed(source='../data/sounds.swf', symbol='shock.wav')] private var ShockSound:Class;
+
     public var debugText:FlxText;
 
     private var _floor:FloorSprite;
@@ -22,6 +24,7 @@ package
     private var _rightShockers:ShockerGroup;
 
     private var _glowGroup:FlxGroup;
+    private var _sparksEmitter:FlxEmitter;
 
     private var _sawCreated:Boolean = false;
     private var _saw:Saw;
@@ -34,7 +37,6 @@ package
     private var _superModeTimer:Number = 0;
     private var _superModeThreshold:Number = 1;
     private var _superModeArray:Array = [0,0,0,0,0];
-    private var _superMode:Boolean = false;
 
     public static const WALL_WIDTH:Number = 32;
     public static const GRAVITY:Number = 600; 
@@ -79,13 +81,13 @@ package
 
       _player = new Player(WALL_WIDTH,_playerOffset);
       _player.jumpCallback = createGlow;
+      _player.fallCallback = createSparks;
       add(_player);
 
       _scoreText = new FlxText(0,16,FlxG.width, GameTracker.score + "m");
       _scoreText.alignment = "center";
       _scoreText.scrollFactor.x = _scoreText.scrollFactor.y = 0;
       add(_scoreText);
-
 
       FlxG.camera.follow(_player);
       FlxG.camera.deadzone = new FlxRect(0,FlxG.height*(2/5),240,Number.MAX_VALUE);
@@ -161,10 +163,33 @@ package
       glow.play(_player.animation);
     }
 
+    public function createSparks():void {
+      _sparksEmitter = new FlxEmitter();
+      for(var i:int = 0; i < 10; i++) {
+        var particle:ShockParticle = new ShockParticle();
+        _sparksEmitter.add(particle);
+      }
+      _sparksEmitter.at(_player) 
+      _sparksEmitter.gravity = GRAVITY*0.7;
+      if(_player.x < FlxG.width/2)
+        _sparksEmitter.setXSpeed(50,100);
+      else
+        _sparksEmitter.setXSpeed(-100,-50);
+
+      _sparksEmitter.setYSpeed(-200,-10);
+    //  emitter.particleClass = ShockParticle;
+      add(_sparksEmitter);
+      _sparksEmitter.start();
+    }
+
     private function checkShocked(group:ShockerGroup):void {
-      for each (var shocker:Shocker in group.members) {
-        if(_player.y > shocker.y - _player.height+1 && _player.y < shocker.y + shocker.height-2) {
-          _player.shocked = true;
+      if(!_player.shocked) {
+        for each (var shocker:Shocker in group.members) {
+          if(_player.y > shocker.y - _player.height+1 && _player.y < shocker.y + shocker.height-2) {
+            _player.shocked = true;
+            FlxG.play(ShockSound);
+            break;
+          }
         }
       }
     }
