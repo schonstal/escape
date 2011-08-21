@@ -4,6 +4,8 @@ package
 
   public class PlayState extends FlxState
   {
+    public var debugText:FlxText;
+
     private var _floor:FloorSprite;
     private var _player:Player;
 
@@ -13,10 +15,11 @@ package
     private var _gameOverPressText:FlxText;
     private var _pressEscapeText:FlxText;
 
-    private var _debugText:FlxText;
-
     private var _leftWalls:Walls;
     private var _rightWalls:Walls;
+
+    private var _leftShockers:ShockerGroup;
+    private var _rightShockers:ShockerGroup;
 
     private var _sawCreated:Boolean = false;
     private var _saw:Saw;
@@ -35,10 +38,10 @@ package
       _scoreText.scrollFactor.x = _scoreText.scrollFactor.y = 0;
       add(_scoreText);
 
-      _debugText = new FlxText(0,48,FlxG.width, "");
-      _debugText.alignment = "center";
-      _debugText.scrollFactor.x = _debugText.scrollFactor.y = 0;
-      add(_debugText);
+      debugText = new FlxText(0,48,FlxG.width, "");
+      debugText.alignment = "center";
+      debugText.scrollFactor.x = debugText.scrollFactor.y = 0;
+      add(debugText);
 
       _pressEscapeText = new FlxText(0,FlxG.height*(4/5),FlxG.width, "PRESS ESCAPE");
       _pressEscapeText.alignment = "center";
@@ -47,11 +50,17 @@ package
       _floor = new FloorSprite(0, _playerOffset + 20);
       add(_floor);
 
-      _leftWalls = new Walls(FlxObject.LEFT);
+      _leftWalls = new Walls();
       add(_leftWalls);
 
-      _rightWalls = new Walls(FlxObject.RIGHT);
+      _rightWalls = new Walls();
       add(_rightWalls);
+
+      _leftShockers = new ShockerGroup(FlxObject.LEFT);
+      add(_leftShockers);
+
+      _rightShockers = new ShockerGroup(FlxObject.RIGHT);
+      add(_rightShockers);
 
       _player = new Player(WALL_WIDTH,_playerOffset);
       add(_player);
@@ -74,16 +83,23 @@ package
         _sawCreated = true;
       }
 
-      if(_sawCreated)
-        _debugText.text = "" + Math.floor(_saw.y) + " : " + Math.floor(_player.y);
-
       if(!_gameOver && _sawCreated && _saw.y < _player.y + _player.height) {
         die();
       }
 
-      if(_player.y - _playerOffset < -GameTracker.score) {
-        GameTracker.score = -(_player.y - _playerOffset);
-        _scoreText.text = Math.floor(GameTracker.score/20) + "m";
+      if(_player.x <= WALL_WIDTH) {
+        checkShocked(_leftShockers);
+      } else if(_player.x >= FlxG.width - WALL_WIDTH - _player.width) {
+        checkShocked(_rightShockers);
+      }
+
+      if(FlxG.collide(_player, _leftShockers) || FlxG.overlap(_player, _rightShockers)) {
+        _player.shocked = true;
+      }
+
+      if(_player.y - _playerOffset < -GameTracker.score*20) {
+        GameTracker.score = -(_player.y - _playerOffset)/20;
+        _scoreText.text = Math.floor(GameTracker.score) + "m";
       }
 
       if(_gameOver && FlxG.keys.justPressed("ESCAPE")) {
@@ -94,6 +110,14 @@ package
       }
 
       super.update();
+    }
+
+    private function checkShocked(group:ShockerGroup):void {
+      for each (var shocker:Shocker in group.members) {
+        if(_player.y > shocker.y - _player.height && _player.y < shocker.y + shocker.height) {
+          _player.shocked = true;
+        }
+      }
     }
 
     private function die():void {

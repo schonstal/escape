@@ -18,6 +18,11 @@ package
 
     private var _maxCameraY:Number = 0;
 
+    private var _shockTimer:Number = 0;
+    private var _shockThreshold:Number = 0.5;
+
+    public var shocked:Boolean = false;
+
     public function Player(X:Number,Y:Number):void {
       super(X,Y);
       loadGraphic(ImgPlayer, true, true, 16, 20); 
@@ -40,6 +45,8 @@ package
       addAnimation("jump", [3]);
       addAnimation("fall", [4]);
       addAnimation("idle", [0,2,0,2,0,2,0,2,0,2,1,2],4);
+      addAnimation("shock", [7,6],15);
+      addAnimation("crisp", [6]);
 
 
       facing = RIGHT;
@@ -49,48 +56,62 @@ package
       _leftWallRange = PlayState.WALL_WIDTH;
       _rightWallRange = (FlxG.camera.width - PlayState.WALL_WIDTH) - width;
 
-      if(FlxG.keys.justPressed("ESCAPE") && (x <= _leftWallRange + WALL_LEEWAY || x >= _rightWallRange - WALL_LEEWAY)) {
-        _escapePressed = true;
-      }
+      if(shocked) {
+        _shockTimer += FlxG.elapsed;
+        if(_shockTimer < _shockThreshold) {
+          FlxG.shake(0.001, 0.05);
+          velocity.y = velocity.x = acceleration.x = acceleration.y = 0;
+          play("shock");
+        } else {
+          angularVelocity = (x < FlxG.width/2 ? 100 : -100);
+          play("crisp");
+          acceleration.y = _gravity;
+          velocity.x = (x < FlxG.width/2 ? 100 : -100);
+        }
+      } else {
+        if(FlxG.keys.justPressed("ESCAPE") && (x <= _leftWallRange + WALL_LEEWAY || x >= _rightWallRange - WALL_LEEWAY)) {
+          _escapePressed = true;
+        }
 
-      if(_escapePressed && velocity.x == 0) {
-        if(velocity.y < 0)
-          velocity.y -= _speed.y;
-        else
-          velocity.y = -_speed.y;
-        
-        velocity.x = _speed.x * (facing == LEFT ? -1 : 1);
-        _escapePressed = false; 
-      }
+        if(_escapePressed && velocity.x == 0) {
+          if(velocity.y < 0)
+            velocity.y -= _speed.y;
+          else
+            velocity.y = -_speed.y;
+          
+          velocity.x = _speed.x * (facing == LEFT ? -1 : 1);
+          _escapePressed = false; 
+        }
 
 
-      if(x <= _leftWallRange && facing == LEFT) {
-        velocity.x = 0;
-        x = PlayState.WALL_WIDTH;
-        facing = RIGHT;
-      } else if(x >= _rightWallRange && facing == RIGHT) {
-        velocity.x = 0;
-        x = (FlxG.camera.width - PlayState.WALL_WIDTH) - width;
-        facing = LEFT;
-      }
+        if(x <= _leftWallRange && facing == LEFT) {
+          velocity.x = 0;
+          x = PlayState.WALL_WIDTH;
+          facing = RIGHT;
+        } else if(x >= _rightWallRange && facing == RIGHT) {
+          velocity.x = 0;
+          x = (FlxG.camera.width - PlayState.WALL_WIDTH) - width;
+          facing = LEFT;
+        }
 
       if(velocity.y > _gravity * 0.75)
         velocity.y = _gravity * 0.75;
 
-      if(!FlxG.keys.ESCAPE && velocity.y < 0)
-        acceleration.y = _gravity * 3;
-      else
-        acceleration.y = _gravity;
-
-      if(standing) {
-        play("idle");
-      } else {
-        if(velocity.x == 0)
-          play("slide");
-        else if (velocity.y < 0)
-          play("jump");
+        if(!FlxG.keys.ESCAPE && velocity.y < 0)
+          acceleration.y = _gravity * 3;
         else
-          play("fall");
+          acceleration.y = _gravity;
+
+        if(standing) {
+          play("idle");
+        } else {
+          if(velocity.x == 0)
+            play("slide");
+          else if (velocity.y < 0)
+            play("jump");
+          else
+            play("fall");
+        }
       }
 
       super.update();
