@@ -4,21 +4,26 @@ package
 
   public class Walls extends FlxGroup
   {
-    public static const BLOCKS:Number = 200;
+    public static const BLOCKS:Number = 30;
+    public static const WALL_HEIGHT:Number = 128;
+
     [Embed(source='../data/walls.png')] private var WallMap:Class;
 
+    public var shockers:FlxGroup;
+
+    private var _side:uint;
     private var _topY:Number;
 
-    public function Walls(side:uint):void {
+    public function Walls():void {
+      shockers = new FlxGroup();
+
       for(var i:uint = 1; i <= BLOCKS; i++) {
-        var s:FlxSprite = new FlxSprite((side == FlxObject.LEFT ? 16 : FlxG.width - 32),FlxG.height - (16*i));
-        s.loadGraphic(WallMap, true, true, 16, 16);
-        if(side == FlxObject.RIGHT)
-          s.facing = FlxObject.LEFT;
+        var s:FlxSprite = new FlxSprite(0,FlxG.height - (WALL_HEIGHT*i));
+        s.loadGraphic(WallMap, true, true, 240, WALL_HEIGHT);
         add(s);
       }
 
-      _topY = -((BLOCKS+1) * 16) + FlxG.height;
+      _topY = -((BLOCKS+1) * WALL_HEIGHT) + FlxG.height;
     }
 
     public override function update():void {
@@ -26,7 +31,8 @@ package
       for each (var s:FlxSprite in members) {
         if(s.y > FlxG.camera.scroll.y + FlxG.height) {
           s.y = _topY;
-          _topY -= 16;
+
+          _topY -= WALL_HEIGHT;
         }
       }
       super.update();
