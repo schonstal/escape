@@ -162,7 +162,7 @@ package
 
     private function checkShocked(group:ShockerGroup):void {
       for each (var shocker:Shocker in group.members) {
-        if(_player.y > shocker.y - _player.height && _player.y < shocker.y + shocker.height) {
+        if(_player.y > shocker.y - _player.height+1 && _player.y < shocker.y + shocker.height-2) {
           _player.shocked = true;
         }
       }
