@@ -13,17 +13,18 @@ package
 
     private var _side:uint;
     private var _topY:Number;
+    private var _offset:Number = 16;
 
     public function Walls():void {
       shockers = new FlxGroup();
 
       for(var i:uint = 1; i <= BLOCKS; i++) {
-        var s:FlxSprite = new FlxSprite(0,FlxG.height - (WALL_HEIGHT*i));
+        var s:FlxSprite = new FlxSprite(0,FlxG.height - (WALL_HEIGHT*i) - _offset);
         s.loadGraphic(WallMap, true, true, 240, WALL_HEIGHT);
         add(s);
       }
 
-      _topY = -((BLOCKS+1) * WALL_HEIGHT) + FlxG.height;
+      _topY = -((BLOCKS+1) * WALL_HEIGHT) + FlxG.height - _offset;
     }
 
     public override function update():void {
