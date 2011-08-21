@@ -26,6 +26,7 @@ package
     }
 
     public override function update():void {
+      // TODO: Change difficulty progression
       if(GameTracker.score > 1000) {
         _probability = 0.015;
       } else if(GameTracker.score > 600) {
