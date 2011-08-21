@@ -87,6 +87,16 @@ package
         die();
       }
 
+      if(_player.x <= WALL_WIDTH) {
+        checkShocked(_leftShockers);
+      } else if(_player.x >= FlxG.width - WALL_WIDTH - _player.width) {
+        checkShocked(_rightShockers);
+      }
+
+      if(FlxG.collide(_player, _leftShockers) || FlxG.overlap(_player, _rightShockers)) {
+        _player.shocked = true;
+      }
+
       if(_player.y - _playerOffset < -GameTracker.score*20) {
         GameTracker.score = -(_player.y - _playerOffset)/20;
         _scoreText.text = Math.floor(GameTracker.score) + "m";
@@ -100,6 +110,14 @@ package
       }
 
       super.update();
+    }
+
+    private function checkShocked(group:ShockerGroup):void {
+      for each (var shocker:Shocker in group.members) {
+        if(_player.y > shocker.y - _player.height && _player.y < shocker.y + shocker.height) {
+          _player.shocked = true;
+        }
+      }
     }
 
     private function die():void {
