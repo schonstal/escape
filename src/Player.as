@@ -22,6 +22,9 @@ package
     private var _shockThreshold:Number = 0.5;
 
     public var shocked:Boolean = false;
+    public var animation:String = "";
+
+    public var jumpCallback:Function = null;
 
     public function Player(X:Number,Y:Number):void {
       super(X,Y);
@@ -50,6 +53,11 @@ package
 
 
       facing = RIGHT;
+    }
+
+    override public function play(animationName:String, force:Boolean = false):void {
+      animation = animationName;
+      super.play(animationName, force);
     }
 
     override public function update():void {           
@@ -81,6 +89,12 @@ package
           
           velocity.x = _speed.x * (facing == LEFT ? -1 : 1);
           _escapePressed = false; 
+
+          if(jumpCallback != null) {
+            for(var i:int = 0; i < 2; i++) {
+              jumpCallback(1);
+            }
+          }
         }
 
 

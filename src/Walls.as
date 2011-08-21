@@ -4,7 +4,7 @@ package
 
   public class Walls extends FlxGroup
   {
-    public static const BLOCKS:Number = 20;
+    public static const BLOCKS:Number = 3;
     public static const WALL_HEIGHT:Number = 352;
 
     [Embed(source='../data/walls.png')] private var WallMap:Class;

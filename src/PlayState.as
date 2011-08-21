@@ -21,6 +21,8 @@ package
     private var _leftShockers:ShockerGroup;
     private var _rightShockers:ShockerGroup;
 
+    private var _glowGroup:FlxGroup;
+
     private var _sawCreated:Boolean = false;
     private var _saw:Saw;
     private var _sawY:Number = -100;
@@ -29,6 +31,11 @@ package
 
     private var _playerOffset:Number = 284;
 
+    private var _superModeTimer:Number = 0;
+    private var _superModeThreshold:Number = 1;
+    private var _superModeArray:Array = [0,0,0,0,0];
+    private var _superMode:Boolean = false;
+
     public static const WALL_WIDTH:Number = 32;
     public static const GRAVITY:Number = 600; 
     public static const JUMP_SPEED_X:Number = 400;
@@ -36,8 +43,8 @@ package
     public static const SAW_SPEED:Number = 3.5;
     public static const SAW_MAX:Number = 75;
 
-    public function get playerFacing():uint {
-      return _player.facing;
+    public function get player():Player {
+      return _player;
     }
 
     override public function create():void {
@@ -65,7 +72,12 @@ package
       _floor = new FloorSprite(0, _playerOffset + 20);
       add(_floor);
 
+      _glowGroup = new FlxGroup();
+      _glowGroup.maxSize = 30;
+      add(_glowGroup);
+
       _player = new Player(WALL_WIDTH,_playerOffset);
+      _player.jumpCallback = createGlow;
       add(_player);
 
       _scoreText = new FlxText(0,16,FlxG.width, GameTracker.score + "m");
@@ -104,6 +116,21 @@ package
         _player.x = FlxG.width - WALL_WIDTH - _player.width;
       }
 
+      _superModeTimer += FlxG.elapsed;
+      if(_superModeTimer > _superModeThreshold) {
+        _superModeTimer = 0;
+        _superModeArray.shift();
+        _superModeArray.push(GameTracker.score);
+        if(Math.abs(GameTracker.score - _superModeArray[0]) > 36) {
+          _superMode = true;
+        } else {
+          _superMode = false;
+        }
+      }
+      if (_superMode && !_gameOver && !_player.shocked) {
+        createGlow();
+      }
+
       if(FlxG.collide(_player, _leftShockers) || FlxG.overlap(_player, _rightShockers)) {
         _player.shocked = true;
       }
@@ -121,6 +148,16 @@ package
       }
 
       super.update();
+    }
+
+    public function createGlow(alphaRate:Number = 0.75):void {
+      var glow:PlayerGlow = _glowGroup.recycle(PlayerGlow) as PlayerGlow;
+      glow.x = _player.x;
+      glow.y = _player.y;
+      glow.alpha = 0.5;
+      glow.facing = _player.facing;
+      glow.alphaRate = alphaRate;
+      glow.play(_player.animation);
     }
 
     private function checkShocked(group:ShockerGroup):void {
