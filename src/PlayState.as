@@ -42,6 +42,7 @@ package
     public static const JUMP_HEIGHT:Number = 400;
     public static const SAW_SPEED:Number = 3.5;
     public static const SAW_MAX:Number = 75;
+    public static const SUPER_MODE_DISTANCE:Number = 38;
 
     public function get player():Player {
       return _player;
@@ -121,7 +122,7 @@ package
         _superModeTimer = 0;
         _superModeArray.shift();
         _superModeArray.push(GameTracker.score);
-        if(Math.abs(GameTracker.score - _superModeArray[0]) > 36) {
+        if(Math.abs(GameTracker.score - _superModeArray[0]) > SUPER_MODE_DISTANCE) {
           _superMode = true;
         } else {
           _superMode = false;
