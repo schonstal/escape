@@ -5,18 +5,22 @@ package
     public class GameTracker
     {
         public var _score:Number;
+        public var _highScore:Number;
+        public var _save:FlxSave;
 
         public var _api:KongApi;
 
         private static var _instance:GameTracker = null;
-		public function GameTracker() {
+        public function GameTracker() {
         }
 
         private static function get instance():GameTracker {
             if(_instance == null) {
                 _instance = new GameTracker();
-                _instance._playerPos = new FlxPoint(0,0);
-                _instance._timeRemaining = 30;
+                _instance._score = 0;
+                instance._save = new FlxSave();
+                instance._save.bind("escape-game");
+                _instance._highScore = instance._save.data.highScore;
             }
 
             return _instance;
@@ -26,8 +30,16 @@ package
             return instance._score;
         }
 
+        public static function get highScore():Number {
+            return instance._highScore;
+        }
+
         public static function set score(value:Number):void {
             instance._score = value;
+            if(instance._score > instance._highScore) {
+                instance._highScore = instance._score;
+                instance._save.data.highScore = instance._score;
+            }
         }
 
         public static function get api():KongApi {
