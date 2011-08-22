@@ -11,6 +11,7 @@ package
       loadGraphic(ImgLaser, true, true, 240, 24);
       addAnimation("fire", [0,1], 30);
       blend = "add";
+      visible = false;
       play("fire");
     }
   }
