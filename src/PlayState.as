@@ -104,6 +104,10 @@ package
 
       //FlxG.camera.setBounds(0,-1000000000,0,-1000000000 + (_player.y - 320)) 
 
+      if(_laserGroup.state == LaserGroup.STATE_REST && _player.y <= 46) {
+        _laserGroup.trigger();
+      }
+
       if(!_gameOver && _laserGroup.stateCallback() == LaserGroup.STATE_MOVING && _laserGroup.y < _player.y + _player.height) {
         die();
       }

@@ -13,7 +13,7 @@ package
 
     private var _side:uint;
     private var _topY:Number;
-    private var _offset:Number = 16;
+    private var _offset:Number = 240;
 
     public function Walls():void {
       shockers = new FlxGroup();
