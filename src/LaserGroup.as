@@ -81,6 +81,10 @@ package
           y = FlxG.camera.scroll.y + FlxG.height + 47;
         }
 
+        if(!_laser.visible) {
+          FlxG.shake(0.01, 0.5);
+        }
+
         _laser.visible = true; 
       }
 
