@@ -1,4 +1,3 @@
-
 package
 {
   import org.flixel.*;
@@ -8,7 +7,7 @@ package
     [Embed(source = "../data/facebook.png")] private var ImgFacebook:Class;
 
     public function FacebookButton():void {
-      super(FlxG.width-36,FlxG.height-36);
+      super(FlxG.width-54,FlxG.height-24);
 
       loadGraphic(ImgFacebook, true, true, 32, 32);
       scale = new FlxPoint(0.5, 0.5);
