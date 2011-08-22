@@ -15,8 +15,6 @@ package
 
     private var _scoreText:FlxText;
     private var _highScoreText:FlxText;
-    private var _gameOverText:FlxText;
-    private var _gameOverPressText:FlxText;
     private var _pressEscapeText:FlxText;
 
     private var _leftWalls:Walls;
@@ -55,6 +53,8 @@ package
     }
 
     override public function create():void {
+      FlxG.mouse.hide();
+
       _backgroundGroup = new BackgroundGroup();
       add(_backgroundGroup);
 
@@ -101,67 +101,69 @@ package
     }
 
     override public function update():void {
-      if(FlxG.collide(_player,_floor))
-        _player.standing = true;
-      else
-        _player.standing = false;
-
-      //FlxG.camera.setBounds(0,-1000000000,0,-1000000000 + (_player.y - 320)) 
-
-      if(_laserGroup.state == LaserGroup.STATE_REST && _player.y <= 46) {
-        _laserGroup.trigger();
-      }
-
-      if(_player.exists) {
-        if(_player.y > _laserGroup.y)
-          _laserGroup.stopped = true;
+      if(!_gameOver) {
+        if(FlxG.collide(_player,_floor))
+          _player.standing = true;
         else
-          _laserGroup.stopped = false;
-      }
+          _player.standing = false;
 
-      if(_laserGroup.state == LaserGroup.STATE_MOVING) {
-        if(!GameTracker.playedMusic) {
-          FlxG.playMusic(PlayMusic);
-          GameTracker.playedMusic = true;
+        //FlxG.camera.setBounds(0,-1000000000,0,-1000000000 + (_player.y - 320)) 
+
+        if(_laserGroup.state == LaserGroup.STATE_REST && _player.y <= 46) {
+          _laserGroup.trigger();
         }
-      }
 
-      if(!_gameOver && _laserGroup.stateCallback() == LaserGroup.STATE_MOVING && _laserGroup.y < _player.y + _player.height && _player.y < _laserGroup.y + 8) {
-        die();
-      }
-
-      if(_player.x <= WALL_WIDTH) {
-        checkShocked(_leftShockers);
-        _player.x = WALL_WIDTH;
-      } else if(_player.x >= FlxG.width - WALL_WIDTH - _player.width) {
-        checkShocked(_rightShockers);
-        _player.x = FlxG.width - WALL_WIDTH - _player.width;
-      }
-
-      _superModeTimer += FlxG.elapsed;
-      if(_superModeTimer > _superModeThreshold) {
-        _superModeTimer = 0;
-        _superModeArray.shift();
-        _superModeArray.push(GameTracker.score);
-        if(Math.abs(GameTracker.score - _superModeArray[0]) > SUPER_MODE_DISTANCE) {
-          _player.superMode = true;
-        } else {
-          _player.superMode = false;
+        if(_player.exists) {
+          if(_player.y > _laserGroup.y)
+            _laserGroup.stopped = true;
+          else
+            _laserGroup.stopped = false;
         }
-      }
-      if (_player.superMode && !_gameOver && !_player.shocked) {
-        createGlow();
-      }
 
-      if(FlxG.collide(_player, _leftShockers) || FlxG.overlap(_player, _rightShockers)) {
-        _player.shocked = true;
-      }
+        if(_laserGroup.state == LaserGroup.STATE_MOVING) {
+          if(!GameTracker.playedMusic) {
+            FlxG.playMusic(PlayMusic);
+            GameTracker.playedMusic = true;
+          }
+        }
 
-      if(_player.y - _playerOffset < -GameTracker.score*20) {
-        GameTracker.score = -(_player.y - _playerOffset)/20;
-        _scoreText.text = Math.floor(GameTracker.score) + "m";
-      }
+        if(!_gameOver && _laserGroup.stateCallback() == LaserGroup.STATE_MOVING && _laserGroup.y < _player.y + _player.height && _player.y < _laserGroup.y + 8) {
+          die();
+        }
 
+        if(_player.x <= WALL_WIDTH) {
+          checkShocked(_leftShockers);
+          _player.x = WALL_WIDTH;
+        } else if(_player.x >= FlxG.width - WALL_WIDTH - _player.width) {
+          checkShocked(_rightShockers);
+          _player.x = FlxG.width - WALL_WIDTH - _player.width;
+        }
+
+        _superModeTimer += FlxG.elapsed;
+        if(_superModeTimer > _superModeThreshold) {
+          _superModeTimer = 0;
+          _superModeArray.shift();
+          _superModeArray.push(GameTracker.score);
+          if(Math.abs(GameTracker.score - _superModeArray[0]) > SUPER_MODE_DISTANCE) {
+            _player.superMode = true;
+          } else {
+            _player.superMode = false;
+          }
+        }
+        if (_player.superMode && !_gameOver && !_player.shocked) {
+          createGlow();
+        }
+
+        if(FlxG.collide(_player, _leftShockers) || FlxG.overlap(_player, _rightShockers)) {
+          _player.shocked = true;
+        }
+
+        if(_player.y - _playerOffset < -GameTracker.score*20) {
+          GameTracker.score = -(_player.y - _playerOffset)/20;
+          _scoreText.text = Math.floor(GameTracker.score) + "m";
+        }
+
+      } 
       if(_gameOver && FlxG.keys.justPressed("ESCAPE")) {
         FlxG.fade(0xff000000, 0.5, function():void { 
           FlxG.switchState(new PlayState()); 
@@ -214,7 +216,9 @@ package
     }
 
     private function die():void {
+      _gameOver = true;
       FlxG.play(DeathSound);
+
       var emitter:FlxEmitter = new FlxEmitter();
       for(var i:int = 0; i < 10; i++) {
         var p:GibParticle = new GibParticle();
@@ -228,40 +232,16 @@ package
       emitter.setYSpeed(-400, -200);
       FlxG.shake(0.005, 0.05);
       _player.exists = false;
+
+      var gameOverGroup:GameOverGroup = new GameOverGroup();
+      add(gameOverGroup);
+
       remove(_player);
+      remove(_scoreText);
 
-      _gameOverText = new FlxText(0,FlxG.height/5,FlxG.width, "GAME OVER");
-      _gameOverText.alignment = "center";
-      _gameOverText.setFormat("ack");
-      _gameOverText.size = 32;
-      _gameOverText.scrollFactor.x = _gameOverText.scrollFactor.y = 0;
-      add(_gameOverText);
+      FlxG.mouse.show();
 
-      _gameOverPressText = new FlxText(0,FlxG.height/5+32,FlxG.width, "PRESS ESCAPE TO CONTINUE");
-      _gameOverPressText.alignment = "center";
-      _gameOverPressText.setFormat("ack");
-      _gameOverPressText.scrollFactor.x = _gameOverPressText.scrollFactor.y = 0;
-      add(_gameOverPressText);
-
-      var t:FlxText = new FlxText(0,FlxG.height/2,FlxG.width, Math.floor(GameTracker.score) + "m");
-      t.size = 32;
-      t.alignment = "center";
-      t.setFormat("ack");
-      t.scrollFactor.x = t.scrollFactor.y = 0;
-      add(t);
-
-      t = new FlxText(0,FlxG.height/2+48,FlxG.width, "BEST");
-      t.alignment = "center";
-      t.setFormat("ack");
-      t.scrollFactor.x = t.scrollFactor.y = 0;
-      add(t);
-
-      t = new FlxText(0,FlxG.height/2+64,FlxG.width, Math.floor(GameTracker.highScore) + "m");
-      t.alignment = "center";
-      t.setFormat("ack");
-      t.scrollFactor.x = t.scrollFactor.y = 0;
-      add(t);
-      _gameOver = true;
+      GameTracker.api.kongregate.stats.submit("max_height", GameTracker.highScore);
     }
   }
 }
