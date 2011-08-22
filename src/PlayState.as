@@ -5,6 +5,7 @@ package
   public class PlayState extends FlxState
   {
     [Embed(source='../data/sounds.swf', symbol='shock.wav')] private var ShockSound:Class;
+    [Embed(source='../data/sounds.swf', symbol='death.wav')] private var DeathSound:Class;
     [Embed(source='../data/music.swf', symbol='play')] private var PlayMusic:Class;
 
     public var debugText:FlxText;
@@ -209,6 +210,7 @@ package
     }
 
     private function die():void {
+      FlxG.play(DeathSound);
       var emitter:FlxEmitter = new FlxEmitter();
       for(var i:int = 0; i < 10; i++) {
         var p:GibParticle = new GibParticle();
