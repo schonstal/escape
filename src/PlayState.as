@@ -58,15 +58,6 @@ package
       _backgroundGroup = new BackgroundGroup();
       add(_backgroundGroup);
 
-      debugText = new FlxText(0,48,FlxG.width, "");
-      debugText.alignment = "center";
-      debugText.scrollFactor.x = debugText.scrollFactor.y = 0;
-      add(debugText);
-
-      _pressEscapeText = new FlxText(0,FlxG.height*(4/5),FlxG.width, "PRESS ESCAPE");
-      _pressEscapeText.alignment = "center";
-      add(_pressEscapeText);
-
       _leftWalls = new Walls();
       add(_leftWalls);
 
@@ -86,6 +77,11 @@ package
       _glowGroup.maxSize = 30;
       add(_glowGroup);
 
+      _pressEscapeText = new FlxText(0,FlxG.height*(4/5),FlxG.width, "PRESS ESCAPE");
+      _pressEscapeText.setFormat("ack");
+      _pressEscapeText.alignment = "center";
+      add(_pressEscapeText);
+
       _player = new Player(WALL_WIDTH,_playerOffset);
       _player.jumpCallback = createGlow;
       _player.fallCallback = createSparks;
@@ -96,6 +92,7 @@ package
 
       _scoreText = new FlxText(0,16,FlxG.width, GameTracker.score + "m");
       _scoreText.alignment = "center";
+      _scoreText.setFormat("ack");
       _scoreText.scrollFactor.x = _scoreText.scrollFactor.y = 0;
       add(_scoreText);
 
@@ -235,28 +232,33 @@ package
 
       _gameOverText = new FlxText(0,FlxG.height/5,FlxG.width, "GAME OVER");
       _gameOverText.alignment = "center";
+      _gameOverText.setFormat("ack");
       _gameOverText.size = 32;
       _gameOverText.scrollFactor.x = _gameOverText.scrollFactor.y = 0;
       add(_gameOverText);
 
       _gameOverPressText = new FlxText(0,FlxG.height/5+32,FlxG.width, "PRESS ESCAPE TO CONTINUE");
       _gameOverPressText.alignment = "center";
+      _gameOverPressText.setFormat("ack");
       _gameOverPressText.scrollFactor.x = _gameOverPressText.scrollFactor.y = 0;
       add(_gameOverPressText);
 
       var t:FlxText = new FlxText(0,FlxG.height/2,FlxG.width, Math.floor(GameTracker.score) + "m");
       t.size = 32;
       t.alignment = "center";
+      t.setFormat("ack");
       t.scrollFactor.x = t.scrollFactor.y = 0;
       add(t);
 
       t = new FlxText(0,FlxG.height/2+48,FlxG.width, "BEST");
       t.alignment = "center";
+      t.setFormat("ack");
       t.scrollFactor.x = t.scrollFactor.y = 0;
       add(t);
 
       t = new FlxText(0,FlxG.height/2+64,FlxG.width, Math.floor(GameTracker.highScore) + "m");
       t.alignment = "center";
+      t.setFormat("ack");
       t.scrollFactor.x = t.scrollFactor.y = 0;
       add(t);
       _gameOver = true;
