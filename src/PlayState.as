@@ -204,11 +204,16 @@ package
     }
 
     private function die():void {
-      //var emitter:FlxEmitter = new FlxEmitter(_player.x, _player.y, 6);
-      //emitter.bounce = 1;
-      //emitter.gravity = GRAVITY;
-      //add(emitter);
-      //emitter.start(true, 0, 0.01, 6);
+      var emitter:FlxEmitter = new FlxEmitter();
+      for(var i:int = 0; i < 10; i++) {
+        var p:GibParticle = new GibParticle();
+        emitter.add(p);
+      }
+      emitter.bounce = 1;
+      emitter.gravity = GRAVITY;
+      emitter.at(_player);
+      add(emitter);
+      emitter.start();
       FlxG.shake(0.005, 0.05);
       remove(_player);
 
