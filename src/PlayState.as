@@ -15,8 +15,6 @@ package
 
     private var _scoreText:FlxText;
     private var _highScoreText:FlxText;
-    private var _gameOverText:FlxText;
-    private var _gameOverPressText:FlxText;
     private var _pressEscapeText:FlxText;
 
     private var _leftWalls:Walls;
@@ -216,7 +214,9 @@ package
     }
 
     private function die():void {
+      _gameOver = true;
       FlxG.play(DeathSound);
+
       var emitter:FlxEmitter = new FlxEmitter();
       for(var i:int = 0; i < 10; i++) {
         var p:GibParticle = new GibParticle();
@@ -230,48 +230,12 @@ package
       emitter.setYSpeed(-400, -200);
       FlxG.shake(0.005, 0.05);
       _player.exists = false;
+
+      var gameOverGroup:GameOverGroup = new GameOverGroup();
+      add(gameOverGroup);
+
       remove(_player);
       remove(_scoreText);
-
-      _gameOverText = new FlxText(0,FlxG.height/5,FlxG.width, "GAME OVER");
-      _gameOverText.alignment = "center";
-      _gameOverText.setFormat("ack");
-      _gameOverText.size = 16;
-      _gameOverText.scrollFactor.x = _gameOverText.scrollFactor.y = 0;
-      add(_gameOverText);
-
-      _gameOverPressText = new FlxText(0,FlxG.height/5+32,FlxG.width, "PRESS ESCAPE TO CONTINUE");
-      _gameOverPressText.alignment = "center";
-      _gameOverPressText.setFormat("ack");
-      _gameOverPressText.scrollFactor.x = _gameOverPressText.scrollFactor.y = 0;
-      add(_gameOverPressText);
-
-      var t:FlxText = new FlxText(0,FlxG.height/2,FlxG.width, Math.floor(GameTracker.score) + "m");
-      t.alignment = "center";
-      t.setFormat("ack");
-      t.size = 24;
-      t.scrollFactor.x = t.scrollFactor.y = 0;
-      add(t);
-
-      t = new FlxText(0,FlxG.height/2+48,FlxG.width, "BEST");
-      t.alignment = "center";
-      t.setFormat("ack");
-      t.scrollFactor.x = t.scrollFactor.y = 0;
-      add(t);
-
-      t = new FlxText(0,FlxG.height/2+64,FlxG.width, Math.floor(GameTracker.highScore) + "m");
-      t.alignment = "center";
-      t.setFormat("ack");
-      t.scrollFactor.x = t.scrollFactor.y = 0;
-      add(t);
-      _gameOver = true;
-
-      var button:FlxButton;
-      button = new TwitterButton(Math.floor(GameTracker.score));
-      add(button);
-
-      button = new FacebookButton();
-      add(button);
 
       FlxG.mouse.show();
 
