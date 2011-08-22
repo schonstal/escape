@@ -9,11 +9,11 @@ package
 
     public function Shocker():void {
       super(0,0);
-      loadGraphic(ImgShocker, true, true, 20, 16);
+      loadGraphic(ImgShocker, true, true, 36, 16);
       addAnimation("left", [0]);
       addAnimation("right", [1]);
 
-      width = 20;
+      width = 36;
       height = 16;
     }
 

@@ -5,6 +5,7 @@ package
   public class PlayState extends FlxState
   {
     [Embed(source='../data/sounds.swf', symbol='shock.wav')] private var ShockSound:Class;
+    [Embed(source='../data/sounds.swf', symbol='death.wav')] private var DeathSound:Class;
     [Embed(source='../data/music.swf', symbol='play')] private var PlayMusic:Class;
 
     public var debugText:FlxText;
@@ -37,6 +38,8 @@ package
     private var _superModeTimer:Number = 0;
     private var _superModeThreshold:Number = 1;
     private var _superModeArray:Array = [0,0,0,0,0];
+
+    private var _backgroundGroup:BackgroundGroup;
     
 
     public static const WALL_WIDTH:Number = 32;
@@ -52,6 +55,9 @@ package
     }
 
     override public function create():void {
+      _backgroundGroup = new BackgroundGroup();
+      add(_backgroundGroup);
+
       debugText = new FlxText(0,48,FlxG.width, "");
       debugText.alignment = "center";
       debugText.scrollFactor.x = debugText.scrollFactor.y = 0;
@@ -109,6 +115,13 @@ package
         _laserGroup.trigger();
       }
 
+      if(_player.exists) {
+        if(_player.y > _laserGroup.y)
+          _laserGroup.stopped = true;
+        else
+          _laserGroup.stopped = false;
+      }
+
       if(_laserGroup.state == LaserGroup.STATE_MOVING) {
         if(!GameTracker.playedMusic) {
           FlxG.playMusic(PlayMusic);
@@ -116,7 +129,7 @@ package
         }
       }
 
-      if(!_gameOver && _laserGroup.stateCallback() == LaserGroup.STATE_MOVING && _laserGroup.y < _player.y + _player.height) {
+      if(!_gameOver && _laserGroup.stateCallback() == LaserGroup.STATE_MOVING && _laserGroup.y < _player.y + _player.height && _player.y < _laserGroup.y + 8) {
         die();
       }
 
@@ -179,13 +192,13 @@ package
         _sparksEmitter.add(particle);
       }
       _sparksEmitter.at(_player) 
-      _sparksEmitter.gravity = GRAVITY*0.7;
+      _sparksEmitter.gravity = GRAVITY*0.8;
       if(_player.x < FlxG.width/2)
-        _sparksEmitter.setXSpeed(50,100);
+        _sparksEmitter.setXSpeed(50,200);
       else
-        _sparksEmitter.setXSpeed(-100,-50);
+        _sparksEmitter.setXSpeed(-200,-50);
 
-      _sparksEmitter.setYSpeed(-200,-10);
+      _sparksEmitter.setYSpeed(-200,-80);
     //  emitter.particleClass = ShockParticle;
       add(_sparksEmitter);
       _sparksEmitter.start();
@@ -204,6 +217,7 @@ package
     }
 
     private function die():void {
+      FlxG.play(DeathSound);
       var emitter:FlxEmitter = new FlxEmitter();
       for(var i:int = 0; i < 10; i++) {
         var p:GibParticle = new GibParticle();
@@ -216,6 +230,7 @@ package
       emitter.start();
       emitter.setYSpeed(-400, -200);
       FlxG.shake(0.005, 0.05);
+      _player.exists = false;
       remove(_player);
 
       _gameOverText = new FlxText(0,FlxG.height/5,FlxG.width, "GAME OVER");
