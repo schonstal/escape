@@ -15,8 +15,10 @@ package
     private var _topY:Number;
     private var _offset:Number = 240;
 
-    public function Walls():void {
+    public function Walls(offset:Number = 240):void {
       shockers = new FlxGroup();
+
+      _offset = offset;
 
       for(var i:uint = 1; i <= BLOCKS; i++) {
         var s:FlxSprite = new FlxSprite(0,FlxG.height - (WALL_HEIGHT*i) - _offset);

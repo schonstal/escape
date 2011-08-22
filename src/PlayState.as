@@ -54,6 +54,7 @@ package
 
     override public function create():void {
       FlxG.mouse.hide();
+      FlxG.camera.scroll.y = -16;
 
       _backgroundGroup = new BackgroundGroup();
       add(_backgroundGroup);

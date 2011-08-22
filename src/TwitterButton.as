@@ -9,7 +9,7 @@ package
     private var _score:Number;
 
     public function TwitterButton(score:Number = 0):void {
-      super(FlxG.width - 74, FlxG.height - 24);
+      super(FlxG.width - 74, FlxG.height - 22);
 
       _score = score;
 

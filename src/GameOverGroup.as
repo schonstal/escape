@@ -53,12 +53,8 @@ package
         add(newRecordSprite);
       }
 
-      var button:FlxButton;
-      button = new TwitterButton(Math.floor(GameTracker.score));
-      add(button);
-
-      button = new FacebookButton();
-      add(button);
+      var buttonGroup:ButtonGroup = new ButtonGroup();
+      add(buttonGroup);
     }
   }
 }
