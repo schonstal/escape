@@ -214,6 +214,7 @@ package
       emitter.at(_player);
       add(emitter);
       emitter.start();
+      emitter.setYSpeed(-400, -200);
       FlxG.shake(0.005, 0.05);
       remove(_player);
 

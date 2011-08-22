@@ -65,7 +65,7 @@ package
             s.velocity.y = velocity.y;
         }
 
-        _y = _laser.y;
+        _y = _laser.y+8;
 
         if(_y > FlxG.camera.scroll.y + FlxG.height + 48) {
           y = FlxG.camera.scroll.y + FlxG.height + 47;
