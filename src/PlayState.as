@@ -5,6 +5,7 @@ package
   public class PlayState extends FlxState
   {
     [Embed(source='../data/sounds.swf', symbol='shock.wav')] private var ShockSound:Class;
+    [Embed(source='../data/music.swf', symbol='play')] private var PlayMusic:Class;
 
     public var debugText:FlxText;
 
@@ -104,6 +105,17 @@ package
 
       //FlxG.camera.setBounds(0,-1000000000,0,-1000000000 + (_player.y - 320)) 
 
+      if(_laserGroup.state == LaserGroup.STATE_REST && _player.y <= 46) {
+        _laserGroup.trigger();
+      }
+
+      if(_laserGroup.state == LaserGroup.STATE_MOVING) {
+        if(!GameTracker.playedMusic) {
+          FlxG.playMusic(PlayMusic);
+          GameTracker.playedMusic = true;
+        }
+      }
+
       if(!_gameOver && _laserGroup.stateCallback() == LaserGroup.STATE_MOVING && _laserGroup.y < _player.y + _player.height) {
         die();
       }
@@ -192,11 +204,17 @@ package
     }
 
     private function die():void {
-      //var emitter:FlxEmitter = new FlxEmitter(_player.x, _player.y, 6);
-      //emitter.bounce = 1;
-      //emitter.gravity = GRAVITY;
-      //add(emitter);
-      //emitter.start(true, 0, 0.01, 6);
+      var emitter:FlxEmitter = new FlxEmitter();
+      for(var i:int = 0; i < 10; i++) {
+        var p:GibParticle = new GibParticle();
+        emitter.add(p);
+      }
+      emitter.bounce = 1;
+      emitter.gravity = GRAVITY;
+      emitter.at(_player);
+      add(emitter);
+      emitter.start();
+      emitter.setYSpeed(-400, -200);
       FlxG.shake(0.005, 0.05);
       remove(_player);
 

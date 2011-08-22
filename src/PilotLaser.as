@@ -11,11 +11,17 @@ package
       loadGraphic(ImgPilotLaser, true, true, 240, 1);
       addAnimation("on", [0]);
       addAnimation("off", [1]);
-      addAnimation("blinking", [1,0]);
+      addAnimation("blinking", [1,0,1,0,1,0,1,1,1,1,1,1], 20);
       blend = "add";
       alpha = 0.3;
 
       play("on");
+    }
+
+    override public function update():void {
+      if(state == LaserGroup.STATE_MOVING) {
+        play("off");
+      }
     }
   }
 }

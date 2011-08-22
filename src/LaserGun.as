@@ -12,7 +12,7 @@ package
       super(X,Y);
       loadGraphic(ImgLaserGun, true, true, 32, 96);
       var atRest:Array = [0];
-      var blinking:Array = [0,1];
+      var blinking:Array = [0,1,0,1,0,1,0,0,0,0,0,0];
       var moving:Array = [1,2,3,4];
 
       if(side == FlxObject.RIGHT) {
@@ -24,7 +24,7 @@ package
       }
 
       addAnimation("atRest", atRest, 0);
-      addAnimation("blinking", blinking, 15);
+      addAnimation("blinking", blinking, 20);
       addAnimation("moving", moving, 30);
 
       play("atRest");
@@ -35,7 +35,7 @@ package
         play("blinking");
       } else if (state == LaserGroup.STATE_MOVING) {
         play("moving");
-        _curAnim.delay = -(velocity.y / _wheelArcSize);
+        _curAnim.delay = -(_wheelArcSize / velocity.y);
       }
     }
   }

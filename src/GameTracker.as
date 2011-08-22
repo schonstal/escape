@@ -7,6 +7,7 @@ package
         public var _score:Number;
         public var _highScore:Number;
         public var _save:FlxSave;
+        public var _playedMusic:Boolean;
 
         public var _api:KongApi;
 
@@ -48,6 +49,14 @@ package
 
         public static function set api(value:KongApi):void {
             instance._api = value;
+        }
+
+        public static function get playedMusic():Boolean {
+            return instance._playedMusic;
+        }
+
+        public static function set playedMusic(value:Boolean):void {
+            instance._playedMusic = value;
         }
     }
 }
