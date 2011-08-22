@@ -55,6 +55,8 @@ package
     }
 
     override public function create():void {
+      FlxG.mouse.hide();
+
       _backgroundGroup = new BackgroundGroup();
       add(_backgroundGroup);
 
@@ -229,11 +231,12 @@ package
       FlxG.shake(0.005, 0.05);
       _player.exists = false;
       remove(_player);
+      remove(_scoreText);
 
       _gameOverText = new FlxText(0,FlxG.height/5,FlxG.width, "GAME OVER");
       _gameOverText.alignment = "center";
       _gameOverText.setFormat("ack");
-      _gameOverText.size = 32;
+      _gameOverText.size = 16;
       _gameOverText.scrollFactor.x = _gameOverText.scrollFactor.y = 0;
       add(_gameOverText);
 
@@ -244,9 +247,9 @@ package
       add(_gameOverPressText);
 
       var t:FlxText = new FlxText(0,FlxG.height/2,FlxG.width, Math.floor(GameTracker.score) + "m");
-      t.size = 32;
       t.alignment = "center";
       t.setFormat("ack");
+      t.size = 24;
       t.scrollFactor.x = t.scrollFactor.y = 0;
       add(t);
 
@@ -262,6 +265,17 @@ package
       t.scrollFactor.x = t.scrollFactor.y = 0;
       add(t);
       _gameOver = true;
+
+      var button:FlxButton;
+      button = new TwitterButton(Math.floor(GameTracker.score));
+      add(button);
+
+      button = new FacebookButton();
+      add(button);
+
+      FlxG.mouse.show();
+
+      GameTracker.api.kongregate.stats.submit("max_height", GameTracker.highScore);
     }
   }
 }
