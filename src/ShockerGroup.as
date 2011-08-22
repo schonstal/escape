@@ -24,7 +24,7 @@ package
       _side = side;
       maxSize = 50;
 
-      _topY = 128;
+      _topY = -128;
       _seed += FlxG.elapsed + side * Math.random();
     }
 

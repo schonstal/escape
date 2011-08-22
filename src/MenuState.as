@@ -12,6 +12,8 @@ package
       add(title);
 
       var t:FlxText = new FlxText(0,186,256, "PRESS ESCAPE");
+      t.setFormat("ack");
+      t.size = 20;
       t.alignment = "center";
       add(t);
 

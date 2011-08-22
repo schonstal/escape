@@ -21,7 +21,11 @@ package
                 _instance._score = 0;
                 instance._save = new FlxSave();
                 instance._save.bind("escape-game");
-                _instance._highScore = instance._save.data.highScore;
+
+                if(_instance._save.data.highScore != null)
+                  _instance._highScore = instance._save.data.highScore;
+                else
+                  _instance._highScore = 0;
             }
 
             return _instance;
