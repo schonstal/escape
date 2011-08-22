@@ -244,6 +244,21 @@ package
       _gameOverPressText.scrollFactor.x = _gameOverPressText.scrollFactor.y = 0;
       add(_gameOverPressText);
 
+      var t:FlxText = new FlxText(0,FlxG.height/2,FlxG.width, Math.floor(GameTracker.score) + "m");
+      t.size = 32;
+      t.alignment = "center";
+      t.scrollFactor.x = t.scrollFactor.y = 0;
+      add(t);
+
+      t = new FlxText(0,FlxG.height/2+48,FlxG.width, "BEST");
+      t.alignment = "center";
+      t.scrollFactor.x = t.scrollFactor.y = 0;
+      add(t);
+
+      t = new FlxText(0,FlxG.height/2+64,FlxG.width, Math.floor(GameTracker.highScore) + "m");
+      t.alignment = "center";
+      t.scrollFactor.x = t.scrollFactor.y = 0;
+      add(t);
       _gameOver = true;
     }
   }
