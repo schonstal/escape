@@ -16,9 +16,11 @@ package
     private var _topY:Number = 0;
     
     private var _minDistance:Number = 96;
-    private var _maxDistance:Number = 16;
+    private var _maxDistance:Number = 160;
 
     private var _seed:Number = 12345;
+
+    private var _lastPlacedAt:Number = -1000;
 
     public function ShockerGroup(side:uint):void {
       _side = side;
@@ -55,7 +57,7 @@ package
 
         var randNum:Number = Math.abs(FlxU.srand(_seed)); 
         _seed += randNum;
-        if(randNum < _probability || _topY >= _maxDistance) {
+        if(randNum < _probability || (_topY - _lastPlacedAt <= -_maxDistance)) {
           var amt:Number = Math.abs(FlxU.srand(_seed));
           _seed += amt;
           amt *= _clusterMax;
@@ -69,8 +71,9 @@ package
             if(_side == FlxObject.LEFT)
               s.y -= 32;
             s.side = _side;
+            _lastPlacedAt = s.y;
 
-            _topY -= 16
+            _topY -= 16;
           }
 
           _topY -= _minDistance;
