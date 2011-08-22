@@ -26,9 +26,8 @@ package
     private var _glowGroup:FlxGroup;
     private var _sparksEmitter:FlxEmitter;
 
-    private var _sawCreated:Boolean = false;
-    private var _saw:Saw;
-    private var _sawY:Number = -100;
+    private var _laserCreated:Boolean = false;
+    private var _laserGroup:LaserGroup;
     
     private var _gameOver:Boolean = false;
 
@@ -37,6 +36,7 @@ package
     private var _superModeTimer:Number = 0;
     private var _superModeThreshold:Number = 1;
     private var _superModeArray:Array = [0,0,0,0,0];
+    
 
     public static const WALL_WIDTH:Number = 32;
     public static const GRAVITY:Number = 600; 
@@ -84,6 +84,9 @@ package
       _player.fallCallback = createSparks;
       add(_player);
 
+      _laserGroup = new LaserGroup();
+      add(_laserGroup);
+
       _scoreText = new FlxText(0,16,FlxG.width, GameTracker.score + "m");
       _scoreText.alignment = "center";
       _scoreText.scrollFactor.x = _scoreText.scrollFactor.y = 0;
@@ -101,13 +104,7 @@ package
 
       //FlxG.camera.setBounds(0,-1000000000,0,-1000000000 + (_player.y - 320)) 
 
-      if(!_sawCreated && FlxG.camera.scroll.y < _sawY) {
-        _saw = new Saw(0, FlxG.height);
-        add(_saw);
-        _sawCreated = true;
-      }
-
-      if(!_gameOver && _sawCreated && _saw.y < _player.y + _player.height) {
+      if(!_gameOver && _laserGroup.stateCallback() == LaserGroup.STATE_MOVING && _laserGroup.y < _player.y + _player.height) {
         die();
       }
 
