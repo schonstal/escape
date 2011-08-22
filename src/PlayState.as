@@ -37,6 +37,8 @@ package
     private var _superModeTimer:Number = 0;
     private var _superModeThreshold:Number = 1;
     private var _superModeArray:Array = [0,0,0,0,0];
+
+    private var _backgroundGroup:BackgroundGroup;
     
 
     public static const WALL_WIDTH:Number = 32;
@@ -52,6 +54,9 @@ package
     }
 
     override public function create():void {
+      _backgroundGroup = new BackgroundGroup();
+      add(_backgroundGroup);
+
       debugText = new FlxText(0,48,FlxG.width, "");
       debugText.alignment = "center";
       debugText.scrollFactor.x = debugText.scrollFactor.y = 0;
@@ -179,13 +184,13 @@ package
         _sparksEmitter.add(particle);
       }
       _sparksEmitter.at(_player) 
-      _sparksEmitter.gravity = GRAVITY*0.7;
+      _sparksEmitter.gravity = GRAVITY*0.8;
       if(_player.x < FlxG.width/2)
-        _sparksEmitter.setXSpeed(50,100);
+        _sparksEmitter.setXSpeed(50,200);
       else
-        _sparksEmitter.setXSpeed(-100,-50);
+        _sparksEmitter.setXSpeed(-200,-50);
 
-      _sparksEmitter.setYSpeed(-200,-10);
+      _sparksEmitter.setYSpeed(-200,-80);
     //  emitter.particleClass = ShockParticle;
       add(_sparksEmitter);
       _sparksEmitter.start();
