@@ -115,6 +115,13 @@ package
         _laserGroup.trigger();
       }
 
+      if(_player.exists) {
+        if(_player.y > _laserGroup.y)
+          _laserGroup.stopped = true;
+        else
+          _laserGroup.stopped = false;
+      }
+
       if(_laserGroup.state == LaserGroup.STATE_MOVING) {
         if(!GameTracker.playedMusic) {
           FlxG.playMusic(PlayMusic);
@@ -223,6 +230,7 @@ package
       emitter.start();
       emitter.setYSpeed(-400, -200);
       FlxG.shake(0.005, 0.05);
+      _player.exists = false;
       remove(_player);
 
       _gameOverText = new FlxText(0,FlxG.height/5,FlxG.width, "GAME OVER");

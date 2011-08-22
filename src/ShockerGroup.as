@@ -64,7 +64,7 @@ package
 
           for(var i:int = 0; i < amt; i++) {
             var s:Shocker = recycle(Shocker) as Shocker;
-            s.x = (_side == FlxObject.LEFT ? 16 : FlxG.width - SHOCKER_WIDTH - 16);
+            s.x = (_side == FlxObject.LEFT ? 0 : FlxG.width - SHOCKER_WIDTH - 16);
             s.y = _topY - 16;
             if(_side == FlxObject.LEFT)
               s.y -= 32;

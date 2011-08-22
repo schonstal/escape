@@ -8,7 +8,7 @@ package
     public var onEmitCallback:Function;
 
     public function GibParticle():void {
-      loadGraphic(ImgGibs, true, true, 16, 16);
+      loadGraphic(ImgGibs, true, true, 8, 8);
       exists = false;
       antialiasing = false;
       frame = Math.floor((Math.abs(Math.random()) * 5) - 0.0001);

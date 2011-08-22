@@ -14,6 +14,7 @@ package
     private var _velocity:FlxPoint;
 
     public var state:uint;
+    public var stopped:Boolean = false;
 
     public function get y():Number { return _y; }
     public function set y(value:Number):void { 
@@ -53,16 +54,25 @@ package
       }
 
       _velocity = new FlxPoint(0,-20);
-      _acceleration = new FlxPoint(0,-5);
+      _acceleration = new FlxPoint(0,-4);
+      _y = _laser.y+8;
     }
 
     override public function update():void {
       if(state == STATE_MOVING) {
-        for each (var s:LaserPiece in members) {
-          s.acceleration.y = _acceleration.y;
-          s.maxVelocity.y = 100;
-          if(s.velocity.y == 0)
-            s.velocity.y = velocity.y;
+        if(!stopped) {
+          for each (var s:LaserPiece in members) {
+            s.acceleration.y = _acceleration.y;
+            s.maxVelocity.y = 150;
+            if(s.velocity.y == 0)
+              s.velocity.y = velocity.y;
+          }
+        } else {
+          for each (var l:LaserPiece in members) {
+            l.acceleration.y = 0;
+            l.maxVelocity.y = 0;
+            l.velocity.y = 0;
+          }
         }
 
         _y = _laser.y+8;
@@ -71,7 +81,7 @@ package
           y = FlxG.camera.scroll.y + FlxG.height + 47;
         }
 
-        _laser.visible = true;
+        _laser.visible = true; 
       }
 
       if(state == STATE_BLINKING) {
