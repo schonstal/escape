@@ -26,14 +26,10 @@ package
       title.scrollFactor.x = title.scrollFactor.y = 0;
       add(title);
 
-      var button:FlxButton;
-      button = new TwitterButton();
-      add(button);
+      var buttonGroup:ButtonGroup = new ButtonGroup();
+      add(buttonGroup);
 
-      button = new FacebookButton();
-      add(button);
-
-      button = new StartButton(45,202);
+      var button:FlxButton = new StartButton(45,202);
       add(button);
 
       FlxG.playMusic(TitleMusic);

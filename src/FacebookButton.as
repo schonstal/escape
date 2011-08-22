@@ -7,7 +7,7 @@ package
     [Embed(source = "../data/facebook.png")] private var ImgFacebook:Class;
 
     public function FacebookButton():void {
-      super(FlxG.width-54,FlxG.height-24);
+      super(FlxG.width-54,FlxG.height-22);
 
       loadGraphic(ImgFacebook, true, true, 32, 32);
       scale = new FlxPoint(0.5, 0.5);
