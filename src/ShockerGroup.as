@@ -32,16 +32,15 @@ package
 
     public override function update():void {
       // TODO: Change difficulty progression
-      if(GameTracker.score > 500) {
+      if(GameTracker.score > 700) {
         _probability = 0.025;
-        _maxDistance = 96;
         _minDistance = 64;
-      } else if(GameTracker.score > 300) {
+      } else if(GameTracker.score > 500) {
         _probability = 0.020;
         _clusterMin = 3;
         _minDistance = 96;
         _maxDistance = 128;
-      } else if(GameTracker.score > 200) {
+      } else if(GameTracker.score > 300) {
         _probability = 0.015;
         _maxDistance = 192;
       } else if(GameTracker.score > 100) {
