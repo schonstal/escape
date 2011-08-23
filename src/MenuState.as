@@ -16,10 +16,10 @@ package
       _backgroundGroup = new BackgroundGroup();
       add(_backgroundGroup);
 
-      var walls:Walls = new Walls(19500);
+      var walls:Walls = new Walls(11500);
       add(walls);
 
-      FlxG.camera.scroll.y = -20000;
+      FlxG.camera.scroll.y = -12000;
 
       var title:FlxSprite = new FlxSprite(0,0);
       title.loadGraphic(ImgTitle, true, true, 240, 320);

@@ -80,7 +80,7 @@ package
           play("shock");
         } else {
           if(!_alreadyFell) {
-            FlxG.play(ShockFallSound);
+            FlxG.play(ShockFallSound, 0.8);
             FlxG.shake(0.02, 0.2);
             FlxG.flash(0xffeeeeff, 0.1);
             if(fallCallback != null) {
@@ -108,7 +108,7 @@ package
           _escapePressed = false; 
 
           if(superMode)
-            FlxG.play(SuperJumpSound).volume = 0.5;
+            FlxG.play(SuperJumpSound).volume = 0.3;
           FlxG.play(JumpSound);
 
           if(jumpCallback != null) {
