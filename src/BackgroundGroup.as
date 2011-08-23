@@ -8,14 +8,20 @@ package
     [Embed(source='../data/bg1.png')] private var ImgBg1:Class;
     [Embed(source='../data/bg2.png')] private var ImgBg2:Class;
     [Embed(source='../data/bg3.png')] private var ImgBg3:Class;
+    [Embed(source='../data/bg4.png')] private var ImgBg4:Class;
     [Embed(source='../data/sky.png')] private var ImgSky:Class;
 
     public function BackgroundGroup():void {
       var s:FlxSprite;
 
-      s = new FlxSprite(0,-300);
-      s.loadGraphic(ImgSky, true, true, 240, 640);
+      s = new FlxSprite(0,-380);
+      s.loadGraphic(ImgSky, true, true, 240, 720);
       s.scrollFactor.y = 0.025;
+      add(s);
+
+      s = new FlxSprite(0,-120);
+      s.loadGraphic(ImgBg4, true, true, 240, 320);
+      s.scrollFactor.y = 0.075;
       add(s);
 
       s = new FlxSprite(0,-200);
