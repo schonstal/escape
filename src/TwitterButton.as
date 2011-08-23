@@ -26,7 +26,7 @@ package
       onUp =  function():void { 
         FlxU.openURL("https://twitter.com/intent/tweet?source=webclient&text=" +
           (score == 0 ? "I'm%20playing" : "I%20ascended%20" + score + "%20meters%20in") +
-          "%20%2FESCAPE%5C%20on%20Kongregate!&url=http%3A%2F%2Fkon.gg%2FREPLACE_ME");
+          "%20%2FESCAPE%5C%20on%20Kongregate!&url=http%3A%2F%2Fkon.gg%2FohZ4iO");
       };
     }
   }
