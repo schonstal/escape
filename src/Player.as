@@ -108,7 +108,7 @@ package
           _escapePressed = false; 
 
           if(superMode)
-            FlxG.play(SuperJumpSound).volume = 0.5;
+            FlxG.play(SuperJumpSound).volume = 0.3;
           FlxG.play(JumpSound);
 
           if(jumpCallback != null) {
