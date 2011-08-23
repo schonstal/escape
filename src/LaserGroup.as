@@ -4,6 +4,8 @@ package
 
   public class LaserGroup extends FlxGroup
   {
+    [Embed(source='../data/sounds.swf', symbol='laser.wav')] private var LaserSound:Class;
+
     private var _pilot:PilotLaser;
     private var _laser:Laser;
     private var _gunLeft:LaserGun;
@@ -83,6 +85,7 @@ package
 
         if(!_laser.visible) {
           FlxG.shake(0.01, 0.5);
+          FlxG.play(LaserSound);
         }
 
         _laser.visible = true; 
