@@ -55,7 +55,7 @@ package
         s.getState = stateCallback;
       }
 
-      _velocity = new FlxPoint(0,-20);
+      _velocity = new FlxPoint(0,-19);
       _acceleration = new FlxPoint(0,-4);
       _y = _laser.y+8;
     }

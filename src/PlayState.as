@@ -242,7 +242,7 @@ package
 
       FlxG.mouse.show();
 
-      GameTracker.api.kongregate.stats.submit("max_height", GameTracker.highScore);
+      GameTracker.api.kongregate.stats.submit("max_height", GameTracker.score);
     }
   }
 }
