@@ -108,8 +108,9 @@ package
           _escapePressed = false; 
 
           if(superMode)
-            FlxG.play(SuperJumpSound).volume = 0.3;
-          FlxG.play(JumpSound);
+            FlxG.play(SuperJumpSound);
+          else
+            FlxG.play(JumpSound);
 
           if(jumpCallback != null) {
             for(var i:int = 0; i < 2; i++) {
