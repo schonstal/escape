@@ -14,24 +14,24 @@ package
     public function BackgroundGroup():void {
       var s:FlxSprite;
 
-      s = new FlxSprite(0,-460);
+      s = new FlxSprite(0,-520);
       s.loadGraphic(ImgSky, true, true, 240, 800);
       s.scrollFactor.y = 0.025;
       add(s);
 
-      s = new FlxSprite(0,-120);
+      s = new FlxSprite(0,40);
       s.loadGraphic(ImgBg4, true, true, 240, 320);
-      s.scrollFactor.y = 0.075;
+      s.scrollFactor.y = 0.05;
       add(s);
 
-      s = new FlxSprite(0,-200);
+      s = new FlxSprite(0,-120);
       s.loadGraphic(ImgBg3, true, true, 240, 320);
       s.scrollFactor.y = 0.1;
       add(s);
 
-      s = new FlxSprite(0,-320);
+      s = new FlxSprite(0,-400);
       s.loadGraphic(ImgBg2, true, true, 240, 640);
-      s.scrollFactor.y = 0.15;
+      s.scrollFactor.y = 0.20;
       add(s);
 
       s = new FlxSprite(0,80);
