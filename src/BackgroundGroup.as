@@ -14,7 +14,7 @@ package
     public function BackgroundGroup():void {
       var s:FlxSprite;
 
-      s = new FlxSprite(0,-560);
+      s = new FlxSprite(0,-520);
       s.loadGraphic(ImgSky, true, true, 240, 800);
       s.scrollFactor.y = 0.025;
       add(s);
