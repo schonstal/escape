@@ -15,7 +15,6 @@ package
 
     private var _scoreText:FlxText;
     private var _highScoreText:FlxText;
-    private var _pressEscapeText:FlxText;
 
     private var _leftWalls:Walls;
     private var _rightWalls:Walls;
@@ -74,11 +73,6 @@ package
       _glowGroup.maxSize = 30;
       add(_glowGroup);
 
-      _pressEscapeText = new FlxText(0,FlxG.height*(4/5),FlxG.width, "PRESS ESCAPE");
-      _pressEscapeText.setFormat("ack");
-      _pressEscapeText.alignment = "center";
-      add(_pressEscapeText);
-
       _player = new Player(WALL_WIDTH,_playerOffset);
       _player.jumpCallback = createGlow;
       _player.fallCallback = createSparks;
@@ -91,6 +85,7 @@ package
       _scoreText.alignment = "center";
       _scoreText.setFormat("ack");
       _scoreText.scrollFactor.x = _scoreText.scrollFactor.y = 0;
+      _scoreText.shadow = 0xff000000;
       add(_scoreText);
 
       FlxG.camera.follow(_player);

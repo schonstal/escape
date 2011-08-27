@@ -19,9 +19,9 @@ package
       addAnimation("on", [1]);
 
       onUp =  function():void { 
+        FlxG.music.fadeOut(1);
         FlxG.fade(0xff000000,1,function():void {
           FlxG.switchState(new PlayState());
-          FlxG.music.fadeOut(1);
         });
       };
 
