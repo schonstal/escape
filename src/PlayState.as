@@ -33,10 +33,6 @@ package
 
     private var _playerOffset:Number = 284;
 
-    private var _superModeTimer:Number = 0;
-    private var _superModeThreshold:Number = 1;
-    private var _superModeArray:Array = [0,0,0,0,0];
-
     private var _backgroundGroup:BackgroundGroup;
     
 
@@ -98,7 +94,7 @@ package
       add(_scoreText);
 
       FlxG.camera.follow(_player);
-      FlxG.camera.deadzone = new FlxRect(0,FlxG.height*(2/5),240,Number.MAX_VALUE);
+      FlxG.camera.deadzone = new FlxRect(0,FlxG.height*(1/2),240,Number.MAX_VALUE);
     }
 
     override public function update():void {
@@ -140,17 +136,6 @@ package
           _player.x = FlxG.width - WALL_WIDTH - _player.width;
         }
 
-        _superModeTimer += FlxG.elapsed;
-        if(_superModeTimer > _superModeThreshold) {
-          _superModeTimer = 0;
-          _superModeArray.shift();
-          _superModeArray.push(GameTracker.score);
-          if(Math.abs(GameTracker.score - _superModeArray[0]) > SUPER_MODE_DISTANCE) {
-            _player.superMode = true;
-          } else {
-            _player.superMode = false;
-          }
-        }
         if (_player.superMode && !_gameOver && !_player.shocked) {
           createGlow();
         }

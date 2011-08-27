@@ -61,6 +61,8 @@ package
 
 
       facing = RIGHT;
+
+      maxVelocity.y = 600;
     }
 
     override public function play(animationName:String, force:Boolean = false):void {
@@ -99,18 +101,18 @@ package
         }
 
         if(_escapePressed && velocity.x == 0) {
-          if(velocity.y < 0)
+          if(velocity.y < 0) {
+            superMode = true;
+            FlxG.play(SuperJumpSound);
             velocity.y -= _speed.y;
-          else
+          } else {
             velocity.y = -_speed.y;
+            FlxG.play(JumpSound);
+            superMode = false;
+          }
           
           velocity.x = _speed.x * (facing == LEFT ? -1 : 1);
           _escapePressed = false; 
-
-          if(superMode)
-            FlxG.play(SuperJumpSound);
-          else
-            FlxG.play(JumpSound);
 
           if(jumpCallback != null) {
             for(var i:int = 0; i < 2; i++) {
