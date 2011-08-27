@@ -192,7 +192,7 @@ package
     private function checkShocked(group:ShockerGroup):void {
       if(!_player.shocked) {
         for each (var shocker:Shocker in group.members) {
-          if(_player.y > shocker.y - _player.height+1 && _player.y < shocker.y + shocker.height-2) {
+          if(_player.y > shocker.y - _player.height+2 && _player.y < shocker.y + shocker.height-3) {
             _player.shocked = true;
             FlxG.play(ShockSound);
             break;
