@@ -16,7 +16,7 @@ package
 
       s = new FlxSprite(0,-520);
       s.loadGraphic(ImgSky, true, true, 240, 800);
-      s.scrollFactor.y = 0.025;
+      s.scrollFactor.y = 0.03;
       add(s);
 
       s = new FlxSprite(0,40);
