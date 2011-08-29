@@ -96,7 +96,7 @@ package
           velocity.x = (x < FlxG.width/2 ? 100 : -100);
         }
       } else {
-        if(FlxG.keys.justPressed("ESCAPE") && (x <= _leftWallRange + WALL_LEEWAY || x >= _rightWallRange - WALL_LEEWAY)) {
+        if(GameTracker.escapePressed() && (x <= _leftWallRange + WALL_LEEWAY || x >= _rightWallRange - WALL_LEEWAY)) {
           _escapePressed = true;
         }
 
@@ -135,7 +135,7 @@ package
       if(velocity.y > _gravity * 0.75)
         velocity.y = _gravity * 0.75;
 
-        if(!FlxG.keys.ESCAPE && velocity.y < 0)
+        if(!GameTracker.escapeHeld() && velocity.y < 0)
           acceleration.y = _gravity * 3;
         else
           acceleration.y = _gravity;

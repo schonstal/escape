@@ -12,6 +12,9 @@ package
         public var _api:KongApi;
 
         private static var _instance:GameTracker = null;
+
+        private static var _keys:Array = ['ESCAPE','SPACE','X','C','W','UP','ENTER'];
+
         public function GameTracker() {
         }
 
@@ -61,6 +64,29 @@ package
 
         public static function set playedMusic(value:Boolean):void {
             instance._playedMusic = value;
+        }
+
+        public static function escapePressed():Boolean {
+          for each(var key:String in _keys) {
+            if(FlxG.keys.justPressed(key)) {
+              for each(var hKey:String in _keys) {
+                if(hKey != key && FlxG.keys.pressed(hKey)) {
+                  return false;
+                }
+              }
+              return true;
+            }
+          }
+
+          return false;
+        }
+
+        public static function escapeHeld():Boolean {
+          for each(var key:String in _keys) {
+            if(FlxG.keys.pressed(key))
+              return true;
+          }
+          return false;
         }
     }
 }

@@ -145,7 +145,7 @@ package
         }
 
       } 
-      if(_gameOver && FlxG.keys.justPressed("ESCAPE")) {
+      if(_gameOver && GameTracker.escapePressed()) {
         FlxG.fade(0xff000000, 0.5, function():void { 
           FlxG.switchState(new PlayState()); 
           GameTracker.score = 0; 
