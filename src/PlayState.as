@@ -93,6 +93,7 @@ package
       _bottomlessBounds = new FlxRect(0,FlxG.height/2,240,Number.MAX_VALUE);
       _bottomedBounds = new FlxRect(0,FlxG.height/2,240,FlxG.height/2);
 
+      FlxG.camera.bounds = new FlxRect(0, -2000000000, 240, 2000000000+FlxG.height-16);
       FlxG.camera.follow(_player);
       FlxG.camera.deadzone = _bottomedBounds;
     }
