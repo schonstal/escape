@@ -34,6 +34,8 @@ package
 
     private var _backgroundGroup:BackgroundGroup;
     
+    private var _bottomlessBounds:FlxRect;
+    private var _bottomedBounds:FlxRect;
 
     public static const WALL_WIDTH:Number = 32;
     public static const GRAVITY:Number = 600; 
@@ -88,8 +90,11 @@ package
       _scoreText.shadow = 0xff000000;
       add(_scoreText);
 
+      _bottomlessBounds = new FlxRect(0,FlxG.height/2,240,Number.MAX_VALUE);
+      _bottomedBounds = new FlxRect(0,FlxG.height/2,240,FlxG.height/2);
+
       FlxG.camera.follow(_player);
-      FlxG.camera.deadzone = new FlxRect(0,FlxG.height*(1/2),240,Number.MAX_VALUE);
+      FlxG.camera.deadzone = _bottomedBounds;
     }
 
     override public function update():void {
@@ -103,6 +108,7 @@ package
 
         if(_laserGroup.state == LaserGroup.STATE_REST && _player.y <= 46) {
           _laserGroup.trigger();
+          _backgroundGroup.troll.play("trolololo");
         }
 
         if(_player.exists) {
@@ -117,6 +123,8 @@ package
             FlxG.playMusic(PlayMusic);
             GameTracker.playedMusic = true;
           }
+          if(FlxG.camera.deadzone.height < Number.MAX_VALUE && _player.y < _laserGroup.y)
+            FlxG.camera.deadzone = _bottomlessBounds;
         }
 
         if(!_gameOver && _laserGroup.stateCallback() == LaserGroup.STATE_MOVING && _laserGroup.y < _player.y + _player.height && _player.y < _laserGroup.y + 8) {

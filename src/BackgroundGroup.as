@@ -11,6 +11,8 @@ package
     [Embed(source='../data/bg4.png')] private var ImgBg4:Class;
     [Embed(source='../data/sky.png')] private var ImgSky:Class;
 
+    public var troll:FlxSprite;
+
     public function BackgroundGroup():void {
       var s:FlxSprite;
 
@@ -34,9 +36,10 @@ package
       s.scrollFactor.y = 0.16;
       add(s);
 
-      s = new FlxSprite(0,80);
-      s.loadGraphic(ImgStartZone, true, true, 240, 224);
-      add(s);
+      troll = new FlxSprite(0,80);
+      troll.loadGraphic(ImgStartZone, true, true, 240, 224);
+      troll.addAnimation("trolololo",[1]);
+      add(troll);
 
       s = new FlxSprite(0, -2320);
       s.loadGraphic(ImgBg1, true, true, 240, 2400);
