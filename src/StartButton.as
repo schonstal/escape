@@ -4,7 +4,7 @@ package
 
   public class StartButton extends FlxButton
   {
-    [Embed(source = "../data/startGame.png")] private var ImgStartGame:Class;
+    [Embed(source = "data/startGame.png")] private var ImgStartGame:Class;
 
     public function StartButton(X:Number, Y:Number):void {
       super(X,Y);
@@ -21,7 +21,7 @@ package
       onUp =  function():void { 
         FlxG.music.fadeOut(1);
         FlxG.fade(0xff000000,1,function():void {
-          FlxG.switchState(new PlayState());
+          FlxG.switchState(new PlayState());		  
         });
       };
 

@@ -1,12 +1,15 @@
 package
 {
   import org.flixel.*;
+  import com.teamclew.*;
+  import flash.system.fscommand;
+  
 
   public class MenuState extends FlxState
   {
-    [Embed(source = "../data/title.png")] private var ImgTitle:Class;
-    [Embed(source = "../data/music.swf", symbol='title')] private var TitleMusic:Class;
-    [Embed(source = "../data/cursor.png")] private var ImgCursor:Class;
+    [Embed(source = "data/title.png")] private var ImgTitle:Class;
+    [Embed(source = "data/music.swf", symbol='title')] private var TitleMusic:Class;
+    [Embed(source = "data/cursor.png")] private var ImgCursor:Class;
 
     private var _backgroundGroup:BackgroundGroup;
 
@@ -33,7 +36,9 @@ package
       add(button);
 
       FlxG.playMusic(TitleMusic);
-      FlxG.mouse.load(ImgCursor, 2);
+//      FlxG.mouse.load(ImgCursor, 2);
+
+
     }
 
     override public function update():void {
@@ -42,7 +47,16 @@ package
 
       FlxG.camera.scroll.y -= FlxG.elapsed * _cameraVelocity;
 
+	  if (FlxG.keys.Q && FlxG.keys.CONTROL) {
+		  fscommand("quit");
+	  }	  
+
+	  if (GameTracker.fullScreenPressed()) {
+		  TCGame.game.toggleFullScreen();
+	  }
+
       super.update();
+	 
     }
   }
 }

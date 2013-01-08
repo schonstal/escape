@@ -4,7 +4,7 @@ package
 
   public class LaserGroup extends FlxGroup
   {
-    [Embed(source='../data/sounds.swf', symbol='laser.wav')] private var LaserSound:Class;
+    [Embed(source='data/sounds.swf', symbol='laser.wav')] private var LaserSound:Class;
 
     private var _pilot:PilotLaser;
     private var _laser:Laser;

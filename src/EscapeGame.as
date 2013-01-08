@@ -1,15 +1,18 @@
 package
 {
   import org.flixel.*;
+  import com.teamclew.*;
+  
   [SWF(width="480", height="640", backgroundColor="#000000")]
-  [Frame(factoryClass="Preloader")]
+//  [Frame(factoryClass="Preloader")]
 
-  public class EscapeGame extends FlxGame
+  public class EscapeGame extends TCGame
   {
-    [Embed(source = '../data/adore64.ttf', fontFamily="ack", embedAsCFF="false")] public var AckFont:String;
+    [Embed(source = 'data/Adore64.ttf', fontFamily="ack", embedAsCFF="false")] public var AckFont:String;
+	
     public function EscapeGame() {
       FlxG.level = 0;
-      super(240,320,MenuState,2);
+      super(240,320,MenuState,1,60,30,false);
     }
   }
 }
