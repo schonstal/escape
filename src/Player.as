@@ -8,11 +8,11 @@ package
     public var standing:Boolean = true;
     public static const WALL_LEEWAY:Number = 24;
 
-    [Embed(source='../data/sounds.swf', symbol='jump.wav')] private var JumpSound:Class;
-    [Embed(source='../data/sounds.swf', symbol='superJump.wav')] private var SuperJumpSound:Class;
-    [Embed(source='../data/sounds.swf', symbol='shockFall.wav')] private var ShockFallSound:Class;
+    [Embed(source='data/sounds.swf', symbol='jump.wav')] private var JumpSound:Class;
+    [Embed(source='data/sounds.swf', symbol='superJump.wav')] private var SuperJumpSound:Class;
+    [Embed(source='data/sounds.swf', symbol='shockFall.wav')] private var ShockFallSound:Class;
 
-    [Embed(source='../data/player.png')] private var ImgPlayer:Class;
+    [Embed(source='data/player.png')] private var ImgPlayer:Class;
     private var _speed:FlxPoint;
     private var _gravity:Number = PlayState.GRAVITY; 
 

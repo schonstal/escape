@@ -4,7 +4,7 @@ package
 
   public class Laser extends LaserPiece
   {
-    [Embed(source='../data/laser.png')] private var ImgLaser:Class;
+    [Embed(source='data/laser.png')] private var ImgLaser:Class;
 
     public function Laser(X:Number, Y:Number):void {
       super(X,Y);

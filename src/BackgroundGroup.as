@@ -4,12 +4,12 @@ package
 
   public class BackgroundGroup extends FlxGroup
   {
-    [Embed(source='../data/startZone.png')] private var ImgStartZone:Class;
-    [Embed(source='../data/bg1.png')] private var ImgBg1:Class;
-    [Embed(source='../data/bg2.png')] private var ImgBg2:Class;
-    [Embed(source='../data/bg3.png')] private var ImgBg3:Class;
-    [Embed(source='../data/bg4.png')] private var ImgBg4:Class;
-    [Embed(source='../data/sky.png')] private var ImgSky:Class;
+    [Embed(source='data/startZone.png')] private var ImgStartZone:Class;
+    [Embed(source='data/bg1.png')] private var ImgBg1:Class;
+    [Embed(source='data/bg2.png')] private var ImgBg2:Class;
+    [Embed(source='data/bg3.png')] private var ImgBg3:Class;
+    [Embed(source='data/bg4.png')] private var ImgBg4:Class;
+    [Embed(source='data/sky.png')] private var ImgSky:Class;
 
     public var troll:FlxSprite;
 

@@ -4,7 +4,7 @@ package
 
   public class ShockParticle extends FlxParticle
   {
-    [Embed(source='../data/spark.png')] private var ImgSpark:Class;
+    [Embed(source='data/spark.png')] private var ImgSpark:Class;
 
     public var fadeRate:Number = 1;
 

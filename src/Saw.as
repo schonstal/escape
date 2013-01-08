@@ -4,7 +4,7 @@ package
 
   public class Saw extends FlxSprite
   {
-    [Embed(source='../data/saw.png')] private var ImgSaw:Class;
+    [Embed(source='data/saw.png')] private var ImgSaw:Class;
 
     private var _heightOffset:Number = 16;
 

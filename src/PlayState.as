@@ -1,12 +1,14 @@
 package
 {
   import org.flixel.*;
+  import com.teamclew.*;
+  import flash.system.fscommand;
 
   public class PlayState extends FlxState
   {
-    [Embed(source='../data/sounds.swf', symbol='shock.wav')] private var ShockSound:Class;
-    [Embed(source='../data/sounds.swf', symbol='death.wav')] private var DeathSound:Class;
-    [Embed(source='../data/music.swf', symbol='play')] private var PlayMusic:Class;
+    [Embed(source='data/sounds.swf', symbol='shock.wav')] private var ShockSound:Class;
+    [Embed(source='data/sounds.swf', symbol='death.wav')] private var DeathSound:Class;
+    [Embed(source='data/music.swf', symbol='play')] private var PlayMusic:Class;
 
     public var debugText:FlxText;
 
@@ -50,7 +52,8 @@ package
     }
 
     override public function create():void {
-      FlxG.mouse.hide();
+//      FlxG.mouse.hide();
+	
       FlxG.camera.scroll.y = -16;
 
       _backgroundGroup = new BackgroundGroup();
@@ -160,6 +163,14 @@ package
           GameTracker.score = 0; 
         });
       }
+	  
+	  if (FlxG.keys.Q && FlxG.keys.CONTROL) {
+		  fscommand("quit");
+	  }
+	  
+	  if (GameTracker.fullScreenPressed()) {
+		  TCGame.game.toggleFullScreen();
+	  }
 
       super.update();
     }
@@ -180,7 +191,7 @@ package
         var particle:ShockParticle = new ShockParticle();
         _sparksEmitter.add(particle);
       }
-      _sparksEmitter.at(_player) 
+      _sparksEmitter.at(_player);
       _sparksEmitter.gravity = GRAVITY*0.8;
       if(_player.x < FlxG.width/2)
         _sparksEmitter.setXSpeed(50,200);
@@ -229,7 +240,7 @@ package
       remove(_player);
       remove(_scoreText);
 
-      FlxG.mouse.show();
+//      FlxG.mouse.show();
 
       GameTracker.api.kongregate.stats.submit("max_height", GameTracker.score);
     }
