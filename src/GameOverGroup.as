@@ -4,8 +4,8 @@ package
 
   public class GameOverGroup extends FlxGroup
   {
-    [Embed(source='../data/gameOver.png')] private var ImgGameOver:Class;
-    [Embed(source='../data/newRecord.png')] private var ImgNewRecord:Class;
+    [Embed(source='data/gameOver.png')] private var ImgGameOver:Class;
+    [Embed(source='data/newRecord.png')] private var ImgNewRecord:Class;
 
     public function GameOverGroup():void {
       var gameOverSprite:FlxSprite = new FlxSprite(0,0);

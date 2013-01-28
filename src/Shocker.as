@@ -4,7 +4,7 @@ package
 
   public class Shocker extends FlxSprite
   {
-    [Embed(source='../data/shocker.png')] private var ImgShocker:Class;
+    [Embed(source='data/shocker.png')] private var ImgShocker:Class;
     public var side:uint;
 
     public function Shocker():void {

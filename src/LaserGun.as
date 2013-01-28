@@ -4,8 +4,8 @@ package
 
   public class LaserGun extends LaserPiece
   {
-    [Embed(source='../data/laserGun.png')] private var ImgLaserGun:Class;
-    [Embed(source='../data/sounds.swf', symbol='beep.wav')] private var BeepSound:Class;
+    [Embed(source='data/laserGun.png')] private var ImgLaserGun:Class;
+    [Embed(source='data/sounds.swf', symbol='beep.wav')] private var BeepSound:Class;
 
     private var _wheelArcSize:Number = (32*Math.PI/16);
 

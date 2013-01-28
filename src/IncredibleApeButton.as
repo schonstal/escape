@@ -4,7 +4,7 @@ package
 
   public class IncredibleApeButton extends FlxButton
   {
-    [Embed(source = "../data/logo.png")] private var ImgIncredibleApe:Class;
+    [Embed(source = "data/logo.png")] private var ImgIncredibleApe:Class;
 
     public function IncredibleApeButton():void {
       super(38,FlxG.height-22);

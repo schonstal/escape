@@ -13,7 +13,8 @@ package
 
         private static var _instance:GameTracker = null;
 
-        private static var _keys:Array = ['ESCAPE','SPACE','X','C','W','UP','ENTER'];
+        private static var _keys:Array = ['ESCAPE','SPACE','X','C','W','UP'];
+		private static var _fullScreenKeys:Array = ['F','ONE','TWO','THREE','FOUR','FIVE','ENTER','TAB','BACKSPACE','DELETE','BACKSLASH'];
 
         public function GameTracker() {
         }
@@ -81,11 +82,28 @@ package
           return false;
         }
 
+
+
         public static function escapeHeld():Boolean {
           for each(var key:String in _keys) {
             if(FlxG.keys.pressed(key))
               return true;
           }
+          return false;
+        }
+		
+		 public static function fullScreenPressed():Boolean {
+          for each(var key:String in _fullScreenKeys) {
+            if(FlxG.keys.justPressed(key)) {
+              for each(var hKey:String in _keys) {
+                if(hKey != key && FlxG.keys.pressed(hKey)) {
+                  return false;
+                }
+              }
+              return true;
+            }
+          }
+
           return false;
         }
     }

@@ -7,7 +7,7 @@ package
     public static const BLOCKS:Number = 3;
     public static const WALL_HEIGHT:Number = 352;
 
-    [Embed(source='../data/walls.png')] private var WallMap:Class;
+    [Embed(source='data/walls.png')] private var WallMap:Class;
 
     public var shockers:FlxGroup;
 
